@@ -1,0 +1,31 @@
+Centos OS
+** sudo yum install git
+
+Abir Puerto
+** firewall-cmd --permanent --add-port=8000/tcp
+** firewall-cmd --permanent --add-port=80/tcp
+** firewall-cmd --reload
+
+INSTALAR GUNICORN
+** pip install gunicorn
+** gunicorn Web.wsgi:application --bind 0.0.0.0:8000 
+
+PARA MANEJAR EL SUPERVISOR
+* sudo supervisorctl reread
+* sudo supervisorctl update
+* sudo supervisorctl start web
+
+Habilitar Nginx
+** systemctl start nginx
+** systemctl enable nginx
+** sudo service nginx restart
+
+Crear la Carpeta Deploy
+* mkdir deploy
+
+
+REMOVER ESPACIOS EN BASH
+** sed -i 's/\r$//' filename
+
+SQLITE PYTHON 3.2
+export LD_LIBRARY_PATH="/usr/local/lib"
