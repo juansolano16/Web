@@ -27,7 +27,7 @@ urlpatterns = [
 
     ## FORMULARIOS EMPLEADO ##
     path('rhPersonalCreate/', rhPersonalCreateView.as_view(), name='rhPersonalCreate'),
-    path('rhPersonalUpdateView/<str:pk>', rhPersonalUpdateView.as_view(), name='rhPersonalUpdateView'),
+    path('rhPersonalUpdateView/<str:pk>/', rhPersonalUpdateView.as_view(), name='rhPersonalUpdateView'),
     path('listEmpleados/', listEmpleados.as_view(), name='listEmpleados'),
     path('liqEmpleado/', liqEmpleado.as_view(), name='liqEmpleado'),
 ]

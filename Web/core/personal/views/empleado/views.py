@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import connections
 from django.http.response import FileResponse, JsonResponse
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, CreateView, UpdateView
@@ -11,24 +12,6 @@ from core.clases_general.mixins import GroupRequiredMixin
 import config.settings as setting
 from core.personal.forms.empleado.forms import formRhPersonal
 from core.personal.models.personal.models import VtPersonal, RhPersonal
-
-
-class rhPersonalCreateView(CreateView):
-    template_name = 'empleado/createRhPersonal.html'
-    model = RhPersonal
-    form_class = formRhPersonal
-
-
-class rhPersonalUpdateView(UpdateView):
-    model = RhPersonal
-    form_class = formRhPersonal
-    template_name = 'empleado/createRhPersonal.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        return super().dispatch(request, *args, **kwargs)
-
-
 
 class listEmpleados(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
     template_name = 'empleado/listEmpleados.html'
@@ -73,6 +56,32 @@ class listEmpleados(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Empleados'
+        return context
+
+
+class rhPersonalCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
+    template_name = 'empleado/createRhPersonal.html'
+    model = RhPersonal
+    form_class = formRhPersonal
+    group_required = [u'Rh_admin', ]
+
+
+class rhPersonalUpdateView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
+    model = RhPersonal
+    form_class = formRhPersonal
+    template_name = 'empleado/createRhPersonal.html'
+    group_required = [u'Rh_admin', ]
+    success_url = reverse_lazy('personal:listEmpleados')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Datos Empleado'
+        context['entity'] = 'Listado Empleado'
+        context['list_url'] = self.success_url
         return context
 
 
