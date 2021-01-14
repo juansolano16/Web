@@ -1,0 +1,47 @@
+<!-- Modal -->
+{% load widget_tweaks %}
+<div class="modal fade" id="{{ idtable|default:'modalForm' }}" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="." enctype="multipart/form-data" id="{{ idForm|default:'modalFormD' }}">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <b><i class="fas fa-search"></i> <span></span></b>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <input name="action" type="hidden" value="{{ idAction|default:'add' }}">
+                        {% block body_modal %}
+                            {% for field in form.visible_fields %}
+                                <div class="form-group">
+                                    <label for="email">{{ field.label }}:</label>
+                                    {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                                </div>
+                            {% endfor %}
+                        {% endblock %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    {% block footer_modal %}
+                        <button type="submit" class="btn btn-primary btn-flat btn-block"><i class="fas fa-save"></i>
+                            Guardar
+                        </button>
+                    {% endblock %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $('#{{ idtable|default:'modalForm' }}').on('hide.bs.modal', function () {
+        $('#{{ idForm|default:'modalFormD' }}')[0].reset();
+    });
+</script>

@@ -1,0 +1,286 @@
+{% extends 'list.html' %}
+{% load static %}
+{% load embed %}
+
+{% block head_list_js %}
+    <!-- Librerias propias -->
+    <script src="{% static 'inventario/js/listProdAuditoria.js' %}"></script>
+    <script src="{% static 'inventario/js/listProdAudRepuestos.js' %}"></script>
+    <script src="{% static 'inventario/js/listProdAudAuvi.js' %}"></script>
+
+    <!-- Librerias para Select -->
+    <script src="{% static 'lib/select2-4.0.13/js/select2.min.js' %}"></script>
+    <script src="{% static 'lib/select2-4.0.13/js/i18n/es.js' %}"></script>
+
+    <!-- Librerias para Autocomplete -->
+    <script src="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'proforma/js/prodImgProf.js' %}"></script>
+
+{% endblock %}
+
+{% block head_list_css %}
+    <link href="{% static 'lib/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'lib/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
+
+    <!-- Librerias para Autocomplete -->
+    <link href="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+    {% block cabecera_list %}
+        <div style="padding: 1px 5%; background: #f1f1f1">
+            <div class="form-row">
+                <div class="form-row col-md-8" style="display: flex; align-items: center;">
+                    <div style="width: 150px; padding-right: 40px">
+                        <label> Cabecera: </label>
+                        <input name="cod_comprobante" placeholder="Comprobante" maxlength="10" autocomplete="off"
+                               class="form-control" required="" id="cod_comprobante" value="---" readonly>
+
+                        <input name="estado_cab" type="hidden" value="">
+                    </div>
+
+                    <div style="width: 300px">
+                        <label> Agencia: </label>
+                        {{ formTgAgencia.nombre }}
+                    </div>
+                </div>
+
+                <div class="form-row col-md-2" style="display: flex; align-items: center; padding: 30px 0px 0px 30px">
+                    <div style="text-align: center;">
+                        <a href="#" type="butttom" class="btn btn-primary btn-flat"
+                           onclick="showModalSobrante()">
+                            <i class="fas fa-plus"></i> Sobrantes
+                        </a>
+                    </div>
+                </div>
+
+                <div class="form-row col-md-2" style="display: flex; align-items: center; padding-top: 30px">
+                    <div style="text-align: center;">
+                        <a href="#" id="btn_cerrar_cab" type="butttom" class="btn btn-danger btn-flat"
+                           onclick="cerrarComprobante()">
+                            <i class="fas fa-window-close"></i> Cerrar Edición
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <hr/>
+        </div>
+    {% endblock %}
+
+    {% block body_list %}
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><a role="tab" data-toggle="tab" class="nav-link active"
+                                    href="#tab-1">Motos/Bicicletas</a>
+            </li>
+            <li class="nav-item"><a role="tab" data-toggle="tab" class="nav-link"
+                                    href="#tab-2">Repuestos/Promocionales</a>
+            </li>
+            <li class="nav-item"><a role="tab" data-toggle="tab" class="nav-link"
+                                    href="#tab-3">Auvi/Electrodomésticos</a></li>
+        </ul>
+
+        <br>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="tab-1">
+                {% embed 'datatable.html' with idtable='data1' %}
+                    {% block columns %}
+                        <tr>
+                            <th scope="col" style="width: 5%;">Tipo</th>
+                            <th scope="col" style="width: 10%;">Codigo</th>
+                            <th scope="col" style="width: 20%;">Producto</th>
+                            <th scope="col" style="width: 5%;">Dev</th>
+                            <th scope="col" style="width: 10%;">Serie</th>
+                            <th scope="col" style="width: 10%;">Chasis</th>
+                            <th scope="col" style="width: 5%;">Año</th>
+                            <th scope="col" style="width: 5%;">Color</th>
+                            <th scope="col" style="width: 5%;">Dias</th>
+                            <th scope="col" style="width: 5%;">Registrar</th>
+                        </tr>
+                    {% endblock %}
+                {% endembed %}
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tab-2">
+                Total Inventario: <span id="total_inv"></span> <br>
+                Total Registrado: <span id="total_reg"></span>
+                {% embed 'datatable.html' with idtable='tablaRep' %}
+                    {% block columns %}
+                        <tr>
+                            <th scope="col" style="width: 5%;">Tipo</th>
+                            <th scope="col" style="width: 5%;">Marca</th>
+                            <th scope="col" style="width: 5%;">Código</th>
+                            <th scope="col" style="width: 20%;">Producto</th>
+                            <th scope="col" style="width: 5%;">Dev</th>
+                            <th scope="col" style="width: 5%;">Grupo</th>
+                            <th scope="col" style="width: 5%;">Cantidad</th>
+                            <th scope="col" style="width: 5%;">Registrado</th>
+                            <th scope="col" style="width: 5%;">Registrar</th>
+                        </tr>
+                    {% endblock %}
+
+{#                    {% block foot %}#}
+{#                        <tr>#}
+{#                            <th>sName</th>#}
+{#                            <th>Position</th>#}
+{#                            <th>Office</th>#}
+{#                            <th>Age</th>#}
+{#                            <th>Start date</th>#}
+{#                            <th>Salary</th>#}
+{#                        </tr>#}
+{#                    {% endblock %}#}
+
+                {% endembed %}
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tab-3">
+                {% embed 'datatable.html' with idtable='tablaAuvi' %}
+                    {% block columns %}
+                        <tr>
+                            <th scope="col" style="width: 5%;">Tipo</th>
+                            <th scope="col" style="width: 5%;">Marca</th>
+                            <th scope="col" style="width: 5%;">Código</th>
+                            <th scope="col" style="width: 20%;">Producto</th>
+                            <th scope="col" style="width: 5%;">Dev</th>
+                            <th scope="col" style="width: 5%;">Serie</th>
+                            <th scope="col" style="width: 5%;">Dias</th>
+                            <th scope="col" style="width: 5%;">Registrar</th>
+                        </tr>
+                    {% endblock %}
+                {% endembed %}
+            </div>
+        </div>
+    {% endblock %}
+
+    <!-- Modal Registro de inventario-->
+    {% load widget_tweaks %}
+    {% embed 'modalForm.html' with idtable='modalform1' idForm='modalformd1' idAction='searchInvantarioFinal' %}
+        {% block body_modal %}
+            {% for field in formStIventarioDMoto.visible_fields %}
+                <div class="form-group">
+                    <label for="email">{{ field.label }}:</label>
+                    {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                </div>
+            {% endfor %}
+
+            {% for field in formStIventarioDMoto.hidden_fields %}
+                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+            {% endfor %}
+
+        {% endblock %}
+    {% endembed %}
+
+
+    <!-- Modal Registro de inventario - repuestos -->
+    {% load widget_tweaks %}
+    {% embed 'modalForm.html' with idtable='modalform2' idForm='modalformd2' idAction='searchInvantarioRep' %}
+        {% block body_modal %}
+            {% for field in formStIventarioDRep.visible_fields %}
+                <div class="form-group">
+                    <label for="email">{{ field.label }}:</label>
+                    {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                    {% if field.id_for_label != "id_rayon" and field.id_for_label != "id_transferencia" %}
+                        <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {% for field in formStIventarioDRep.hidden_fields %}
+                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+
+
+    <!-- Modal Registro de inventario - auvi -->
+    {% load widget_tweaks %}
+    {% embed 'modalForm.html' with idtable='modalform3' idForm='modalformd3' idAction='searchInvantarioAuvi' %}
+        {% block body_modal %}
+            {% for field in formStIventarioDAuvi.visible_fields %}
+                <div class="form-group">
+                    <label for="email">{{ field.label }}:</label>
+                    {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                </div>
+            {% endfor %}
+
+            {% for field in formStIventarioDAuvi.hidden_fields %}
+                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+            {% endfor %}
+
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+
+{% block buttons_list %}
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var tabs = {{ tabs|safe }};
+        var select_tab = tabs[0].nom;
+        var order_tabla;
+        var filtroSearch;
+
+        // Inicializar Variables
+        $(function () {
+            $('.nav-tabs a').on('shown.bs.tab', function (event) {
+                if (select_agencia.val()) CargarInv();
+                select_tab = $('.nav-tabs .active').text();
+            });
+        });
+
+
+        function CargarInv(ag = 123123) {
+            var agencia = select_agencia.val();
+            if (ag != 123123) agencia = ag;
+
+            if (!select_agencia.val() && ag == 123123) {
+                message_error('Revisar los datos, Agencia no seleccionada');
+                return false;
+            }
+            ;
+
+            var url = window.location.pathname;
+            var tab_select = $('.nav-tabs .active').text();
+            var action = tab_select == "Motos/Bicicletas" ? "searchInvantarioFinal" : tab_select == "Repuestos/Promocionales" ? "searchInvantarioRep" : "searchInvantarioAuvi";
+            var recibeF = tab_select == "Motos/Bicicletas" ? recibeJsonInv : tab_select == "Repuestos/Promocionales" ? recibeJsonInvRep : recibeJsonInvAuvi;
+            var data = {'action': action, 'agencia': agencia}
+            sendDataAjax(url, data, recibeF);
+        };
+
+        function showModalSobrante() {
+            var tab_select = $('.nav-tabs .active').text();
+            if (tab_select == "Motos/Bicicletas") ingresarInvModalSobrante();
+            else if (tab_select == "Repuestos/Promocionales") ingresarInvModalSobranteRep();
+            else if (tab_select == "Auvi/Electrodomésticos") ingresarInvModalSobranteAuvi();
+        };
+
+        function cerrarComprobante() {
+            var agencia = select_agencia.val();
+            var comprobante = $('input[name="cod_comprobante"]').val();
+            var estado_cab = $('input[name="estado_cab"]').val();
+
+            if (!select_agencia.val() && comprobante == '---') {
+                message_error('Revisar los datos, Agencia no seleccionada');
+                return false;
+            }
+            ;
+
+            if (estado_cab == 'S' && comprobante != '---') {
+                message_error('No puede realizar la siguiente accion, cabecera cerrada');
+                return false;
+            }
+            ;
+
+            var url = window.location.pathname;
+            var title = 'Cerrar edición de inventario';
+            var contenido = 'Luego de cerrar la cabecera no podra editar registros'
+            var data = "action=cerrarCabecera&agencia=" + agencia + "&comprobante=" + comprobante;
+            var contentType = 'application/x-www-form-urlencoded';
+            submit_with_ajax(url, title, contenido, data, function () {
+                disableBtn('btn_cerrar_cab', true);
+            }, contentType_ = contentType);
+        };
+    </script>
+{% endblock %}

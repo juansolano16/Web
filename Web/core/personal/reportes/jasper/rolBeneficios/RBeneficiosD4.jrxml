@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RBeneficiosD4" pageWidth="2150" pageHeight="2380" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="2150" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="0d1ac288-762f-4286-8766-fa468cc5f7d6">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="2452"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.xls.white.page.background" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.collapse.row.span" value="true"/>
+	<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.graphics" value="false"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Unnopartsdb"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="IMAGE_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\juansolano\\OneDrive - Grupo Vazquez\\Mastermoto\\ReportesJasper\\imagenes"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PERIODO" class="java.lang.String"/>
+	<parameter name="REGION" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from jaher.vt_rol_beneficio a
+where
+(a.region = $P{REGION} or decode($P{REGION}, 'SIERRA', 'ORIENTE') = a.region)
+and a.periodo =  $P{PERIODO}]]>
+	</queryString>
+	<field name="REGION" class="java.lang.String"/>
+	<field name="PERIODO" class="java.lang.String"/>
+	<field name="CEDULA" class="java.lang.String"/>
+	<field name="EMPLEADO" class="java.lang.String"/>
+	<field name="AGENCIA" class="java.lang.String"/>
+	<field name="CARGO" class="java.lang.String"/>
+	<field name="F_INGRESO" class="java.sql.Timestamp"/>
+	<field name="AGOSTO" class="java.math.BigDecimal"/>
+	<field name="AGOSTO_T" class="java.lang.String"/>
+	<field name="SEPTIEMBRE" class="java.math.BigDecimal"/>
+	<field name="SEPTIMEBRE_T" class="java.lang.String"/>
+	<field name="OCTUBRE" class="java.math.BigDecimal"/>
+	<field name="OCTUBRE_T" class="java.lang.String"/>
+	<field name="NOVIMBRE" class="java.math.BigDecimal"/>
+	<field name="NOVIMBRE_T" class="java.lang.String"/>
+	<field name="DICIEMBRE" class="java.math.BigDecimal"/>
+	<field name="DICIEMBRE_T" class="java.lang.String"/>
+	<field name="ENERO" class="java.math.BigDecimal"/>
+	<field name="ENERO_T" class="java.lang.String"/>
+	<field name="FEBRERO" class="java.math.BigDecimal"/>
+	<field name="FEBRERO_T" class="java.lang.String"/>
+	<field name="MARZO" class="java.math.BigDecimal"/>
+	<field name="MARZO_T" class="java.lang.String"/>
+	<field name="ABRIL" class="java.math.BigDecimal"/>
+	<field name="ABRIL_T" class="java.lang.String"/>
+	<field name="MAYO" class="java.math.BigDecimal"/>
+	<field name="MAYO_T" class="java.lang.String"/>
+	<field name="JUNIO" class="java.math.BigDecimal"/>
+	<field name="JUNIO_T" class="java.lang.String"/>
+	<field name="JULIO" class="java.math.BigDecimal"/>
+	<field name="JULIO_T" class="java.lang.String"/>
+	<field name="TOTAL" class="java.math.BigDecimal"/>
+	<field name="VROL" class="java.math.BigDecimal"/>
+	<field name="PROV" class="java.math.BigDecimal"/>
+	<field name="TOTALANIO" class="java.math.BigDecimal"/>
+	<field name="DIAS" class="java.math.BigDecimal"/>
+	<field name="AJUSTEDIC" class="java.math.BigDecimal"/>
+	<field name="LIQ_HABERES" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="50" width="70" height="20" uuid="2822c1df-f709-4378-b8c2-a21078fceda6">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm">
+				<reportElement x="70" y="50" width="170" height="20" uuid="e0001cdc-2e53-48b3-9bda-7e95ecb31366">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="0" y="0" width="1132" height="50" uuid="2d250375-9721-4d6e-a99f-a60418de85a6"/>
+				<image scaleImage="FillFrame" isLazy="true">
+					<reportElement x="0" y="0" width="240" height="50" uuid="36f2fbdb-7bd8-4e12-8854-3b2f35b46d2d"/>
+					<imageExpression><![CDATA[$P{IMAGE_DIR} + "/logounno.jpg"]]></imageExpression>
+				</image>
+				<textField>
+					<reportElement x="240" y="0" width="842" height="30" uuid="ed1835c9-fd18-47c1-bd02-8fa4fd6d40f1">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="15" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["DECIMO CUARTO SUELDO REGION: " + $F{REGION} +" PERIODO: " +$F{PERIODO}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="70" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="ea87de6e-a621-45ed-aecb-74ff07b72a9b">
+					<property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CEDULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="70" y="0" width="170" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="e97dad86-752a-4352-b788-9407dc664316"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[EMPLEADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="240" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="67c42f6c-7e9a-4cfc-9698-6d883ca08f55">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[AGENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="360" y="0" width="117" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="d521f6fd-c869-4562-9953-0c74bb9c2ec1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CARGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="477" y="0" width="55" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="46c54165-ab6c-4f83-8d60-50e26354a359">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="net.sf.jasperreports.export.xls.auto.filter" value="End"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[INGRESO]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="532" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="0e29bb14-9190-40c2-9947-dcc0d3850e21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REGION}.equals("SIERRA") ? "AGOSTO":"MARZO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="582" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="52522fde-bcf9-4e60-a49b-52a53fb30d4e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FP]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="632" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="110ab089-bca2-46c0-a964-fff03c664967"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REGION}.equals("SIERRA") ? "SEPTIEMBRE":"ABRIL"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="682" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="f01ac4f0-ba44-437a-b525-39733ff94f87"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FP]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="732" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="0293b5aa-840a-4ee9-9542-ba7b34f79704"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REGION}.equals("SIERRA") ? "OCTUBRE":"MAYO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="782" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="4aaa3de9-b0dc-49d0-ab10-0d84c777dabc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FP]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="832" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="1c9fa445-be50-4674-be0a-e7977d4c1bb9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REGION}.equals("SIERRA") ? "NOVIMBRE":"JUNIO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="882" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="b368d2fe-5b42-4bf3-8526-e26b425cba21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FP]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="932" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="da881006-8617-4fe3-a0e1-119289ce8f0d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REGION}.equals("SIERRA") ? "DICIEMBRE": "JULIO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="982" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="108cd790-d24f-45fa-a765-2b46c4817acd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FP]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="1032" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="0c2db97f-99c7-4d85-9c2b-6238de7d3fd3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REGION}.equals("SIERRA") ? "ENERO": "AGOSTO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1082" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="10e8c7b2-1576-497a-ae77-a340aa5a0ee4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FP]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="1132" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="1df29104-75cb-4f41-9bcc-a9cf42a41155"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REGION}.equals("SIERRA") ? "FEBRERO": "SEPTIEMBRE"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1182" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="ab82a98f-ef00-45f6-befe-1d7244029f3f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FP]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="1232" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="732b2564-ccc1-4b89-979a-b0a239362817"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REGION}.equals("SIERRA") ? "MARZO":"OCTUBRE"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1282" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="671b3a43-3a16-4959-96b2-a45df5c4fb92"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FP]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="1332" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="caaaaf20-b42c-4cbd-88cc-bb835494aa84"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REGION}.equals("SIERRA") ? "ABRIL": "NOVIEMBRE"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1382" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="f88b2a2c-6f45-40c9-956b-1a42946e4782"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FP]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="1432" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="d58c0ce3-9969-41dd-8351-ea82d0577da4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REGION}.equals("SIERRA") ? "MAYO":"DICIEMBRE"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1482" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="9c6689f7-d260-44eb-b2e3-ff36b59aad8e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FP]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="1532" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="4fc8f03f-90cc-4206-869c-73d2e9cf9a72"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REGION}.equals("SIERRA") ? "JUNIO":"ENERO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1582" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="d95dedac-0a17-41e7-be34-ebb94c39f204"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FP]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="1632" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="0317646b-8aea-43b2-961e-f85181666aa0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REGION}.equals("SIERRA") ? "JULIO": "FEBRERO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1682" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="0697f09a-b9a0-45c7-8170-57cb2bf8948c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FP]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="1732" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="8ef77462-d261-4431-a165-eae29430471e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REGION}.equals("SIERRA") ? "TOT CONT JULIO": "TOT CONT FEB"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1782" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="84aa5b3f-51d3-4a3b-8216-f66901a84d00"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TOT ANIO: " + $F{PERIODO}.substring( 0, 4 )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1832" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="f57afce9-ac9f-4e6f-9fc3-fc757c78046f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["AJUSTEDIC "  + $F{PERIODO}.substring( 0, 4 )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1882" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="a88a41a8-44ce-4334-b5eb-9d53f98b283e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CANCELACION EN ROL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1932" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="4f35c869-62c7-4331-b7ac-315a800f2cc4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[LIQ.     HABERES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1982" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="5ddaeb93-00fe-416e-9dd6-8296b01de761"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[VALOR A CANCELAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="2032" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="e80446c9-7589-4e49-8b88-36e1c457334d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[DIAS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.spreadsheet.SpreadsheetLayout"/>
+			<textField>
+				<reportElement x="0" y="0" width="70" height="15" uuid="c048adcf-459c-42ff-a5af-ae5eca8e6647">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CEDULA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="170" height="15" uuid="327c7a93-69a0-465f-8b2a-06a1b7459733"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPLEADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="120" height="15" uuid="29a45acc-4d34-473d-bf71-d9645ecd7153"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AGENCIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="0" width="117" height="15" uuid="b3e73b4e-1da0-4449-b1d5-887184d3dcf6"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="0" width="55" height="15" uuid="eef0497d-fecf-49fd-83c7-a41e61437818">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="net.sf.jasperreports.export.xls.freeze.column.edge" value="Right"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").format($F{F_INGRESO})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="532" y="0" width="50" height="15" uuid="5080c046-164f-467f-8c9c-78ddcd956729">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AGOSTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="582" y="0" width="50" height="15" uuid="9855fd01-9be2-45e9-9488-e1c8736bb3d1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AGOSTO_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="632" y="0" width="50" height="15" uuid="0ad8a637-49b6-416d-b517-5b76717ace14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SEPTIEMBRE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="682" y="0" width="50" height="15" uuid="18bfaaa3-ef21-4a39-94d3-2074f6cc9d01"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SEPTIMEBRE_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="732" y="0" width="50" height="15" uuid="cc8657e9-95a6-4dff-bcfb-6c64d05d437a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OCTUBRE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="782" y="0" width="50" height="15" uuid="808c33e5-b380-4e93-8027-74ee6f60faaf"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OCTUBRE_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="832" y="0" width="50" height="15" uuid="b2ac85be-7e11-4a37-917f-07cc0db769fb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOVIMBRE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="882" y="0" width="50" height="15" uuid="9349ce3e-ab40-43f8-82dd-51ccbf736ae4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOVIMBRE_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="932" y="0" width="50" height="15" uuid="7d224f55-c6ab-476d-bb1e-31ce0d3c3a54"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DICIEMBRE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="982" y="0" width="50" height="15" uuid="29905769-81e8-42e4-9188-55d27814ac3d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DICIEMBRE_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1032" y="0" width="50" height="15" uuid="9a43526a-6db8-4934-9417-1eb9201a2f02"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ENERO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1082" y="0" width="50" height="15" uuid="2954270b-b92e-4187-9b81-0e4b08f16b25"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ENERO_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1132" y="0" width="50" height="15" uuid="7e809642-71fd-4a73-8bc3-4164b4dd7afb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FEBRERO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1182" y="0" width="50" height="15" uuid="902df099-61da-4765-a0c4-d1564b0a6700"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FEBRERO_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1232" y="0" width="50" height="15" uuid="44222709-1aba-447b-9f5c-92539e6aab9d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MARZO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1282" y="0" width="50" height="15" uuid="833839a0-c3fc-49e6-b6a6-5d5ccfadaa83"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MARZO_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1332" y="0" width="50" height="15" uuid="265f4381-900a-40f1-ad71-fee76e9b6558"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ABRIL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1382" y="0" width="50" height="15" uuid="252a655a-c020-411a-a118-49a1170b0d44"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ABRIL_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1432" y="0" width="50" height="15" uuid="b1966868-2fdb-4d3c-ab2f-2b2a192dc2c8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MAYO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1482" y="0" width="50" height="15" uuid="7a8b4f39-9f94-4f48-820b-6db9c3c10695"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MAYO_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1532" y="0" width="50" height="15" uuid="24e56927-434b-42a4-bcad-bf7a4607f12d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JUNIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1582" y="0" width="50" height="15" uuid="79d4e0dd-f1d9-4c37-9ecb-86a3a1f66519"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JUNIO_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1632" y="0" width="50" height="15" uuid="c38ca012-33b7-4ba7-a890-7d9a10827a39"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JULIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1682" y="0" width="50" height="15" uuid="cb339091-f3ee-45b0-8209-eaee65c608b6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JULIO_T}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement x="1732" y="0" width="50" height="15" uuid="f258a7fb-4a72-4d17-8d3d-fe7c0dfe7855"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00-)" isBlankWhenNull="true">
+				<reportElement x="1782" y="0" width="50" height="15" uuid="10a3e691-9dad-4280-8210-a064f71847b1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTALANIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="1832" y="0" width="50" height="15" uuid="ae0e47d0-9157-4618-99f4-b715def1726e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AJUSTEDIC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1882" y="0" width="50" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="818901af-e59d-46f9-8a31-50b5a4e61844"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VROL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1932" y="0" width="50" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="bdda8bf0-81d3-4f26-a742-bc83058d327c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LIQ_HABERES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1982" y="0" width="50" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="84f9931b-e822-4b9d-a77a-6ffedb9b978b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL}.doubleValue()+$F{AJUSTEDIC}.doubleValue()-$F{VROL}.doubleValue()-$F{LIQ_HABERES}.doubleValue()]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="2032" y="0" width="50" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="b1f93868-7607-4259-acf8-2e00b64910a9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIAS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="54">
+			<staticText>
+				<reportElement x="258" y="10" width="452" height="30" uuid="05d40029-6992-40ad-9761-724fb9cbf993"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[NO EXISTEN DATOS]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,89 @@
+{% extends 'list.html' %}
+{% load static %}
+{% load embed %}
+
+{% block head_list_js %}
+    <script src="{% static 'ride/js/list.js' %}"></script>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 25%;">Cliente</th>
+        <th scope="col" style="width: 10%;">Tipo Doc</th>
+        <th scope="col" style="width: 12%;">F.Emision</th>
+        <th scope="col" style="width: 15%;">F.Autorizacion</th>
+        <th scope="col" style="width: 20%;">No. Doc</th>
+        <th scope="col" style="width: 10%;">Estado</th>
+        <th scope="col" style="width: 10%;">Links</th>
+    </tr>
+
+
+{% endblock %}
+
+{% block buttons_list %}
+    <a href="#" class="btn btn-primary btn-flat" id="btnProcesar" onclick="buscarFac(this)">
+        <i class="fas fa-plus"></i> Procesar Factura
+    </a>
+
+
+    <!-- Modal -->
+    {% load widget_tweaks %}
+    {% embed 'modalForm.html' with idtable='modalFormAdd' idForm='modalFormA' %}
+        {% block body_modal %}
+            {% embed 'datatable.html' with idtable='data1' %}
+                {% block columns %}
+                    <tr>
+                        <th scope="col">Agencia</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Comprobante</th>
+                        <th scope="col">CodPersona</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Porcesar</th>
+                    </tr>
+                {% endblock %}
+            {% endembed %}
+
+            {% block footer_modal %}
+            {% endblock %}
+
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        function descargaRide(element) {
+            //obtiene la fila y datos del registro seleccionado
+            var tr = tabla2.cell($(element).closest('td, li')).index();
+            var data = tabla2.row(tr.row).data();
+
+            console.log(data);
+            if (element.id == 'xml') data_ = "action=descargaRide&comprobante=" + data['dirxml'];
+            else data_ = "action=descargaRide&comprobante=" + data['dirpdf'];
+            genArchivo(window.location.pathname, data_, data['nodocumento'] + "." + element.id);
+        };
+
+        function buscarFac(element) {
+            modal_title.find('span').html('Buscar Factura');
+            modal_title.find('i').removeClass().addClass('fas fa-plus');
+            $('.modal-dialog').removeClass().addClass('modal-dialog modal-lg');
+            $('#modalFormAdd').modal('show');
+        };
+
+        function procesarFac(element) {
+            //obtiene la fila y datos del registro seleccionado
+            var tr = tabla1.cell($(element).closest('td, li')).index();
+            var data = tabla1.row(tr.row).data();
+
+            console.log(data);
+            data_ = "action=procesarFac&comprobante=" + data['cod_comprobante'] + '&tipo=' + data['tipo_comprobante'];
+            title = 'Re-procesar Factura';
+            contenido = '¿Estas seguro de realizar la siguiente acción?';
+            contentType = 'application/x-www-form-urlencoded';
+            submit_with_ajax(window.location.path, title, contenido, data_, function () {
+                $('#modalFormAdd').modal('hide');
+            }, contentType);
+        };
+    </script>
+{% endblock %}

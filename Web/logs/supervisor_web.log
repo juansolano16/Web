@@ -1,0 +1,6 @@
+[2020-07-02 15:16:19 -0500] [20718] [INFO] Starting gunicorn 20.0.4
+[2020-07-02 15:16:19 -0500] [20718] [INFO] Listening at: unix:/home/Web/run/gunicorn.sock (20718)
+[2020-07-02 15:16:19 -0500] [20718] [INFO] Using worker: sync
+[2020-07-02 15:16:19 -0500] [20726] [INFO] Booting worker with pid: 20726
+[2020-07-02 15:16:19 -0500] [20727] [INFO] Booting worker with pid: 20727
+[2020-07-02 15:16:19 -0500] [20728] [INFO] Booting worker with pid: 20728

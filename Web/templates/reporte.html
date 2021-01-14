@@ -1,0 +1,104 @@
+{% extends 'layout.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block head %}
+    <link href="{% static 'lib/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'lib/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'lib/select2-4.0.13/js/select2.min.js' %}"></script>
+    <script src="{% static 'lib/select2-4.0.13/js/i18n/es.js' %}"></script>
+
+    {% block head_form %}
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron form-group">
+        <h1 class="text-center">{{ title_rep }}</h1>
+    </div>
+    <form method="post" enctype="multipart/form-data" id="F50-001">
+        <div class="card card-primary col-md-6 col-sm-12 col-xs-12" style="margin: 0px auto">
+            {% block form_header %}
+                <div class="card-header">
+                    <h3 class="card-title">
+                        {{ title }}
+                    </h3>
+                </div>
+            {% endblock %}
+
+            {% block form_body %}
+                <div class="card-body">
+
+                </div>
+            {% endblock %}
+            {% block form_footer %}
+                <div class="card-footer">
+                    <div style="color: #FFFFFF; text-align: center">
+                        <a class="btn btn-primary btn-lg" onclick="generarReporte(this)" id="btn_gen">
+                            <span id="item_cargando" role="status" aria-hidden="true"></span>
+                            <span id="item_texto">Generar Reporte</span>
+                        </a>
+                    </div>
+                </div>
+            {% endblock %}
+            <input type="hidden" name="action" value="{{ action }}">
+        </div>
+    </form>
+
+    {% block javascript_reporte %}
+        <script>
+            $('.select2').select2({
+                theme: "bootstrap4",
+                language: 'es'
+            });
+
+            var select_periodo = $('select[name="periodo"]');
+            var select_empleado = $('select[name="cod_persona"]')
+
+            select_empleado.on('change', function () {
+                var id = $(this).val();
+                if (id === '') return false;
+                $.ajax({
+                    url: window.location.pathname,
+                    type: 'POST',
+                    data: {
+                        'action': 'search_periodo_id',
+                        'id': id
+                    },
+                    dataType: 'json',
+                }).done(function (data) {
+                    if (!data.hasOwnProperty('error')) {
+                        select_periodo.html('').select2({
+                            theme: "bootstrap4",
+                            language: 'es',
+                            data: data
+                        });
+                        return false;
+                    }
+                    message_error(data.error);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(textStatus + ': ' + errorThrown);
+                }).always(function (data) {
+                });
+            });
+            select_periodo.on('change', function () {
+                var value = select_periodo.select2('data')[0];
+                var id = $(this).val();
+                console.log(id);
+            });
+
+            function generarReporte(element) {
+                console.log('Generando Reporte');
+
+                if (!select_periodo.val()) {
+                    message_error('Revisar los datos');
+                    return false;
+                }
+                $('input[name="action"]').val('genReporte')
+                data_ = $('#F50-001').serialize();
+                genArchivo(window.location.pathname, data_, "{{ nombre_reporte }}");
+            }
+
+        </script>
+    {% endblock %}
+{% endblock %}

@@ -15,10 +15,31 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-#from WebProducto.views import products
+
+from config.views import DashboardView
+from core.homepage.views.homepage.views import IndexView
+
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('producto/', products),
-    path('Api/', include('core.WebProducto.urls')),
+
+    path('login/', include('core.login.urls')),
+    path('Api/', include('core.inventario.urls')),
+    path('Api/', include('core.facturacion.urls')),
+    path('api/', include('core.notificaciones.urls')),
+    path('personal/', include('core.personal.urls')),
+    path('user/', include('core.user.urls')),
+    path('electronicos/', include('core.electronicos.urls')),
+
+    # home
+    path('', IndexView.as_view(), name='index'),
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
+
+    # Revista
+    path('Revista/', include('core.Repositorio.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,64 @@
+{% extends 'list.html' %}
+{% load static %}
+{% load embed %}
+
+{% block head_list_js %}
+    <script src="{% static 'turnosEmp/js/list.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    {% block cabecera_list %}
+        <div style="padding: 1px 10%; background: #f1f1f1">
+            {% embed 'datatable.html' with idtable='data1' %}
+                {% block columns %}
+                    <tr>
+                        <th scope="col">MODALIDAD</th>
+                        <th scope="col">T1</th>
+                        <th scope="col">T2</th>
+                        <th scope="col">T3</th>
+                        <th scope="col">T4</th>
+                        <th scope="col">T5</th>
+                        <th scope="col">Editar</th>
+                    </tr>
+                {% endblock %}
+            {% endembed %}
+        </div>
+    {% endblock %}
+
+    {% block body_list %}
+        <div style="padding-top: 3%">
+            {% embed 'datatable.html' with idtable='data2' %}
+                {% block columns %}
+                    <tr>
+                        <th scope="col" style="width: 10%;">Cedula</th>
+                        <th scope="col" style="width: 35%;">Empleado</th>
+                        <th scope="col" style="width: 30%;">Agencia</th>
+                        <th scope="col" style="width: 25%;">Cargo</th>
+                        <th scope="col" style="width: 5%;">Turno</th>
+                        <th scope="col" style="width: 5%;">Editar</th>
+                    </tr>
+                {% endblock %}
+            {% endembed %}
+        </div>
+    {% endblock %}
+
+    <!-- Modal -->
+    {% load widget_tweaks %}
+    {% embed 'modalForm.html' %}
+        {% block body_modal %}
+            {% for field in form_update_emp.visible_fields %}
+                <div class="form-group">
+                    <label for="email">{{ field.label }}:</label>
+                    {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                </div>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+
+{% block buttons_list %}
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}

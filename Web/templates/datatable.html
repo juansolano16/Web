@@ -1,0 +1,19 @@
+<table class="table table-bordered display compact" id="{{ idtable|default:'data' }}">
+    <thead>
+    {% block columns %}
+
+    {% endblock %}
+    </thead>
+
+    <tbody>
+    {% block rows %}
+
+    {% endblock %}
+    </tbody>
+
+    <tfoot>
+    {% block foot %}
+
+    {% endblock %}
+    </tfoot>
+</table>

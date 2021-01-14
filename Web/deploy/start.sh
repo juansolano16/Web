@@ -8,10 +8,10 @@ DJANGODIR=/home/Web/ #Ruta de la carpeta de la aplicación
 SOCKFILE=/home/Web/run/gunicorn.sock #Ruta donde se creará el archivo de socket unix para comunicarnos
 LOGDIR=${DJANGODIR}logs/gunicorn.log #Carpeta donde estara los logs del gunicorn
 USER=juansolano #Usuario con el que vamos a correr el sitio web
-GROUP=jair #Grupo con el que vamos a correr el sitio web
-NUM_WORKERS=3 #Número de procesos que se van a utilizar para correr la aplicación
-DJANGO_SETTINGS_MODULE=Web.settings #Ruta de los settings
-DJANGO_WSGI_MODULE=Web.wsgi #Nombre del módulo wsgi
+GROUP=root #Grupo con el que vamos a correr el sitio web
+NUM_WORKERS=10 #Número de procesos que se van a utilizar para correr la aplicación
+DJANGO_SETTINGS_MODULE=config.settings #Ruta de los settings
+DJANGO_WSGI_MODULE=config.wsgi #Nombre del módulo wsgi
 
 
 # Activar el entorno virtual
@@ -29,6 +29,7 @@ test -d $RUNDIR || mkdir -p $RUNDIR
 exec gunicorn ${DJANGO_WSGI_MODULE}:application \
 --bind=unix:$SOCKFILE \
 --name $NAME \
+--timeout 120 \
 --workers $NUM_WORKERS \
 #--user=$USER --group=$GROUP \
 --log-level=debug \

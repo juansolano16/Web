@@ -1,0 +1,105 @@
+{% extends 'list.html' %}
+{% load static %}
+{% load embed %}
+
+{% block head_list_js %}
+    <script src="{% static 'BodegaVirtual/js/list.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><a role="tab" data-toggle="tab" class="nav-link active" href="#tab-1">Productos
+                Reservados</a></li>
+            <li class="nav-item"><a role="tab" data-toggle="tab" class="nav-link" href="#tab-2">Prod. Aprobados/Negados</a>
+            </li>
+            <li class="nav-item"><a role="tab" data-toggle="tab" class="nav-link" href="#tab-3">Estado</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="tab-1">
+                <div class="container" style="padding: 4% 10px">
+                    {% embed 'datatable.html' with idtable='data1' %}
+                        {% block columns %}
+                            <tr>
+                                <th scope="col">Comprobante</th>
+                                <th scope="col">Usuario</th>
+                                <th scope="col">Agencia</th>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Serie</th>
+                                <th scope="col">Proveedor</th>
+                                <th scope="col">Aprobar</th>
+                            </tr>
+                        {% endblock %}
+                    {% endembed %}
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tab-2">
+                <div class="container" style="padding: 4% 10px">
+                    {% embed 'datatable.html' with idtable='data2' %}
+                        {% block columns %}
+                            <tr>
+                                <th scope="col">Comprobante</th>
+                                <th scope="col">Usuario</th>
+                                <th scope="col">Agencia</th>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Serie</th>
+                                <th scope="col">Año</th>
+                                <th scope="col">Color</th>
+                                <th scope="col">Proveedor</th>
+                                <th scope="col">Anulado</th>
+                            </tr>
+                        {% endblock %}
+                    {% endembed %}
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tab-3">
+                <p>Content for tab 3.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        /*
+        $('.nav-tabs a').on('show.bs.tab', function () {
+            alert('New tab will be visible now!');
+        });*/
+
+        function AprobarReserva(element) {
+            //obtiene la fila y datos del registro seleccionado
+            var tr = tabla_reserva.cell($(element).closest('td, li')).index();
+            var data = tabla_reserva.row(tr.row).data();
+
+            console.log(data);
+            data_ = "action=Aprobar&" +
+                "empresa=" + data['empresa'] +
+                '&tipo_comprobante=' + data['tipo_comprobante'] +
+                '&cod_comprobante=' + data['cod_comprobante'];
+            title = 'Aprobar Reserva';
+            contenido = '¿Estas seguro de realizar la siguiente acción?';
+            contentType = 'application/x-www-form-urlencoded';
+            submit_with_ajax(window.location.path, title, contenido, data_, function () {
+                tabla_reserva.ajax.reload();
+            }, contentType);
+        };
+
+        function NegarReserva(element) {
+            //obtiene la fila y datos del registro seleccionado
+            var tr = tabla_reserva.cell($(element).closest('td, li')).index();
+            var data = tabla_reserva.row(tr.row).data();
+
+            console.log(data);
+            data_ = "action=Negar&" +
+                "empresa=" + data['empresa'] +
+                '&tipo_comprobante=' + data['tipo_comprobante'] +
+                '&cod_comprobante=' + data['cod_comprobante'];
+            title = 'Negar Reserva';
+            contenido = '¿Estas seguro de realizar la siguiente acción?';
+            contentType = 'application/x-www-form-urlencoded';
+            submit_with_ajax(window.location.path, title, contenido, data_, function () {
+                tabla_reserva.ajax.reload();
+            }, contentType);
+        };
+    </script>
+{% endblock %}

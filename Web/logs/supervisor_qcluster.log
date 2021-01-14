@@ -1,0 +1,133 @@
+15:16:20 [Q] INFO Q Cluster west-coffee-aspen-lake starting.
+15:16:20 [Q] INFO Process-1:1 ready for work at 20730
+15:16:20 [Q] INFO Process-1:2 ready for work at 20731
+15:16:20 [Q] INFO Process-1:3 ready for work at 20732
+15:16:20 [Q] INFO Process-1:4 ready for work at 20733
+15:16:20 [Q] INFO Process-1:5 ready for work at 20734
+15:16:20 [Q] INFO Process-1:6 ready for work at 20735
+15:16:20 [Q] INFO Process-1:7 ready for work at 20736
+15:16:20 [Q] INFO Process-1:8 ready for work at 20737
+15:16:20 [Q] INFO Process-1:9 ready for work at 20738
+15:16:20 [Q] INFO Process-1:10 ready for work at 20739
+15:16:20 [Q] INFO Process-1 guarding cluster west-coffee-aspen-lake
+15:16:20 [Q] INFO Process-1:11 monitoring at 20740
+15:16:20 [Q] INFO Q Cluster west-coffee-aspen-lake running.
+15:16:20 [Q] INFO Process-1:12 pushing tasks at 20741
+15:16:20 [Q] INFO Process-1:1 processing [skylark-orange-fourteen-mirror]
+15:16:20 [Q] INFO Process-1:2 processing [ohio-aspen-iowa-eighteen]
+15:16:20 [Q] INFO Process-1:3 processing [robin-carbon-asparagus-river]
+15:16:20 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:20 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:20 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:25 [Q] INFO Process-1:4 processing [skylark-orange-fourteen-mirror]
+15:16:25 [Q] INFO Process-1:5 processing [ohio-aspen-iowa-eighteen]
+15:16:25 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:25 [Q] INFO Process-1:6 processing [robin-carbon-asparagus-river]
+15:16:25 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:25 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:30 [Q] INFO Process-1:7 processing [skylark-orange-fourteen-mirror]
+15:16:30 [Q] INFO Process-1:8 processing [ohio-aspen-iowa-eighteen]
+15:16:30 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:30 [Q] INFO Process-1:9 processing [robin-carbon-asparagus-river]
+15:16:30 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:30 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:35 [Q] INFO Process-1:10 processing [skylark-orange-fourteen-mirror]
+15:16:35 [Q] INFO Process-1:1 processing [ohio-aspen-iowa-eighteen]
+15:16:35 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:35 [Q] INFO Process-1:2 processing [robin-carbon-asparagus-river]
+15:16:35 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:35 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:40 [Q] INFO Process-1:3 processing [skylark-orange-fourteen-mirror]
+15:16:40 [Q] INFO Process-1:4 processing [ohio-aspen-iowa-eighteen]
+15:16:40 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:40 [Q] INFO Process-1:5 processing [robin-carbon-asparagus-river]
+15:16:40 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:40 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:45 [Q] INFO Process-1:6 processing [skylark-orange-fourteen-mirror]
+15:16:46 [Q] INFO Process-1:7 processing [ohio-aspen-iowa-eighteen]
+15:16:46 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:46 [Q] INFO Process-1:8 processing [robin-carbon-asparagus-river]
+15:16:46 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:46 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:49 [Q] INFO Enqueued 29
+15:16:49 [Q] INFO Process-1 created a task from schedule [ReadBodegaMassline]
+15:16:49 [Q] INFO Process-1:9 processing [winner-diet-avocado-cold]
+15:16:49 [Q] INFO Processed [winner-diet-avocado-cold]
+15:16:51 [Q] INFO Process-1:10 processing [skylark-orange-fourteen-mirror]
+15:16:51 [Q] INFO Process-1:1 processing [ohio-aspen-iowa-eighteen]
+15:16:51 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:51 [Q] INFO Process-1:2 processing [robin-carbon-asparagus-river]
+15:16:51 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:51 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:56 [Q] INFO Process-1:3 processing [skylark-orange-fourteen-mirror]
+15:16:56 [Q] INFO Process-1:4 processing [ohio-aspen-iowa-eighteen]
+15:16:56 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:56 [Q] INFO Process-1:5 processing [robin-carbon-asparagus-river]
+15:16:56 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:16:56 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:01 [Q] INFO Process-1:6 processing [skylark-orange-fourteen-mirror]
+15:17:01 [Q] INFO Process-1:7 processing [ohio-aspen-iowa-eighteen]
+15:17:01 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:01 [Q] INFO Process-1:8 processing [robin-carbon-asparagus-river]
+15:17:01 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:01 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:06 [Q] INFO Process-1:9 processing [skylark-orange-fourteen-mirror]
+15:17:06 [Q] INFO Process-1:10 processing [ohio-aspen-iowa-eighteen]
+15:17:06 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:06 [Q] INFO Process-1:1 processing [robin-carbon-asparagus-river]
+15:17:06 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:06 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:11 [Q] INFO Process-1:2 processing [skylark-orange-fourteen-mirror]
+15:17:11 [Q] INFO Process-1:3 processing [ohio-aspen-iowa-eighteen]
+15:17:11 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:11 [Q] INFO Process-1:4 processing [robin-carbon-asparagus-river]
+15:17:11 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:11 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:17 [Q] INFO Process-1:5 processing [skylark-orange-fourteen-mirror]
+15:17:17 [Q] INFO Process-1:6 processing [ohio-aspen-iowa-eighteen]
+15:17:17 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:17 [Q] INFO Process-1:7 processing [robin-carbon-asparagus-river]
+15:17:17 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:17 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:22 [Q] INFO Process-1:8 processing [skylark-orange-fourteen-mirror]
+15:17:22 [Q] INFO Process-1:9 processing [ohio-aspen-iowa-eighteen]
+15:17:22 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:22 [Q] INFO Process-1:10 processing [robin-carbon-asparagus-river]
+15:17:22 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:22 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:27 [Q] INFO Process-1:1 processing [skylark-orange-fourteen-mirror]
+15:17:27 [Q] INFO Process-1:2 processing [ohio-aspen-iowa-eighteen]
+15:17:27 [Q] INFO Process-1:3 processing [robin-carbon-asparagus-river]
+15:17:27 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:27 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:27 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:32 [Q] INFO Process-1:4 processing [skylark-orange-fourteen-mirror]
+15:17:32 [Q] INFO Process-1:5 processing [ohio-aspen-iowa-eighteen]
+15:17:32 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:32 [Q] INFO Process-1:6 processing [robin-carbon-asparagus-river]
+15:17:32 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:32 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:37 [Q] INFO Process-1:7 processing [skylark-orange-fourteen-mirror]
+15:17:37 [Q] INFO Process-1:8 processing [ohio-aspen-iowa-eighteen]
+15:17:37 [Q] INFO Process-1:9 processing [robin-carbon-asparagus-river]
+15:17:37 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:37 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:37 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:42 [Q] INFO Process-1:10 processing [skylark-orange-fourteen-mirror]
+15:17:42 [Q] INFO Process-1:1 processing [ohio-aspen-iowa-eighteen]
+15:17:42 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:42 [Q] INFO Process-1:2 processing [robin-carbon-asparagus-river]
+15:17:42 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:42 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:48 [Q] INFO Process-1:3 processing [skylark-orange-fourteen-mirror]
+15:17:48 [Q] INFO Process-1:4 processing [ohio-aspen-iowa-eighteen]
+15:17:48 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:48 [Q] INFO Process-1:5 processing [robin-carbon-asparagus-river]
+15:17:48 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:48 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:53 [Q] INFO Process-1:6 processing [skylark-orange-fourteen-mirror]
+15:17:53 [Q] INFO Process-1:7 processing [ohio-aspen-iowa-eighteen]
+15:17:53 [Q] ERROR Failed [skylark-orange-fourteen-mirror] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:53 [Q] INFO Process-1:8 processing [robin-carbon-asparagus-river]
+15:17:53 [Q] ERROR Failed [ohio-aspen-iowa-eighteen] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package
+15:17:53 [Q] ERROR Failed [robin-carbon-asparagus-river] - No module named 'core.inventario.clases.bodegaVirtual.BodegaProveedor'; 'core.inventario.clases.bodegaVirtual' is not a package

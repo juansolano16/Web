@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<factura id="comprobante" version="1.0.0">
+<infoTributaria>
+<ambiente>2</ambiente>
+<tipoEmision>1</tipoEmision>
+<razonSocial>UNNOPARTS S. A.</razonSocial>
+<nombreComercial>UNNOPARTS S. A.</nombreComercial>
+<ruc>1792181364001</ruc>
+<claveAcceso>2611202001179218136400120300010000014320000143210</claveAcceso>
+<codDoc>01</codDoc>
+<estab>030</estab>
+<ptoEmi>001</ptoEmi>
+<secuencial>000001432</secuencial>
+<dirMatriz>MANUEL J CALLE 2-14 Y CORNELIO MERCHAN</dirMatriz>
+</infoTributaria>
+<infoFactura>
+<fechaEmision>26/11/2020</fechaEmision>
+<dirEstablecimiento>GUAYAS S/N SIMON DE LA PLATA TORRES</dirEstablecimiento>
+<obligadoContabilidad>SI</obligadoContabilidad>
+<tipoIdentificacionComprador>05</tipoIdentificacionComprador>
+<razonSocialComprador>AVEIGA JOSE EDUARDO CARLOS</razonSocialComprador>
+<identificacionComprador>1718630252</identificacionComprador>
+<totalSinImpuestos>2864.05</totalSinImpuestos>
+<totalDescuento>179.00</totalDescuento>
+<totalConImpuestos>
+<totalImpuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<baseImponible>2394.52</baseImponible>
+<valor>287.34</valor>
+</totalImpuesto>
+<totalImpuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>0</codigoPorcentaje>
+<baseImponible>0.00</baseImponible>
+<valor>0.00</valor>
+</totalImpuesto>
+<totalImpuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>6</codigoPorcentaje>
+<baseImponible>469.54</baseImponible>
+<valor>0.00</valor>
+</totalImpuesto>
+</totalConImpuestos>
+<propina>0.00</propina>
+<importeTotal>3151.39</importeTotal>
+<moneda>DOLAR</moneda>
+<pagos>
+<pago>
+<formaPago>01</formaPago>
+<total>3151.39</total>
+<plazo>24</plazo>
+<unidadTiempo>MESES</unidadTiempo>
+</pago>
+</pagos>
+</infoFactura>
+<detalles>
+<detalle>
+<codigoPrincipal>CASCO_X_ABAT</codigoPrincipal>
+<descripcion>CASCO X_ONE ABATIBLE</descripcion>
+<cantidad>1.00</cantidad>
+<precioUnitario>21.03</precioUnitario>
+<descuento>1.46</descuento>
+<precioTotalSinImpuesto>19.57</precioTotalSinImpuesto>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<tarifa>12.00</tarifa>
+<baseImponible>19.57</baseImponible>
+<valor>2.34</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>IN-LED 32D6S LINUX PROM</codigoPrincipal>
+<descripcion>LED 32 LINUX 5.1 - SMARTV - NETFLIX - AMAZON PRIME VIDEO - YOUTUBE - 2HDMI - 2USB</descripcion>
+<cantidad>1.00</cantidad>
+<precioUnitario>64.59</precioUnitario>
+<descuento>4.49</descuento>
+<precioTotalSinImpuesto>60.10</precioTotalSinImpuesto>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<tarifa>12.00</tarifa>
+<baseImponible>60.10</baseImponible>
+<valor>7.21</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>MCRO-TRA-200</codigoPrincipal>
+<descripcion>MOTOCICLETA MOTOR 1 TRAIL 200</descripcion>
+<cantidad>1.00</cantidad>
+<precioUnitario>2374.49</precioUnitario>
+<descuento>165.16</descuento>
+<precioTotalSinImpuesto>2209.33</precioTotalSinImpuesto>
+<detallesAdicionales>
+<detAdicional nombre="Chasis" valor="R1XJCMLB4MA000369"></detAdicional>
+<detAdicional nombre="Motor" valor="OP163FMLM00393"></detAdicional>
+<detAdicional nombre="Ramv" valor="UN0163660"></detAdicional>
+</detallesAdicionales>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<tarifa>12.00</tarifa>
+<baseImponible>2209.33</baseImponible>
+<valor>265.11</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>CINT324</codigoPrincipal>
+<descripcion>COMBO TALLER</descripcion>
+<cantidad>1.00</cantidad>
+<precioUnitario>92.38</precioUnitario>
+<descuento>6.43</descuento>
+<precioTotalSinImpuesto>85.95</precioTotalSinImpuesto>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<tarifa>12.00</tarifa>
+<baseImponible>85.95</baseImponible>
+<valor>10.34</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>CASCO_X_ABAT</codigoPrincipal>
+<descripcion>CASCO X_ONE ABATIBLE</descripcion>
+<cantidad>1.00</cantidad>
+<precioUnitario>21.03</precioUnitario>
+<descuento>1.46</descuento>
+<precioTotalSinImpuesto>19.57</precioTotalSinImpuesto>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>2</codigoPorcentaje>
+<tarifa>12.00</tarifa>
+<baseImponible>19.57</baseImponible>
+<valor>2.34</valor>
+</impuesto>
+</impuestos>
+</detalle>
+<detalle>
+<codigoPrincipal>FINANCIAMIENTO</codigoPrincipal>
+<descripcion>FINANCIAMIENTO</descripcion>
+<cantidad>1.00</cantidad>
+<precioUnitario>469.54</precioUnitario>
+<descuento>0.00</descuento>
+<precioTotalSinImpuesto>469.54</precioTotalSinImpuesto>
+<impuestos>
+<impuesto>
+<codigo>2</codigo>
+<codigoPorcentaje>6</codigoPorcentaje>
+<tarifa>0.00</tarifa>
+<baseImponible>469.54</baseImponible>
+<valor>0.00</valor>
+</impuesto>
+</impuestos>
+</detalle>
+</detalles>
+<infoAdicional>
+<campoAdicional nombre="AGENTE_RETENCION">NAC-DNCRASC20-00000001</campoAdicional>
+<campoAdicional nombre="FORMA_PAGO">CREDITO SIN GRAVAMEN    Series   CASCOABANOVIEM999  OP163FMLM00393 H4L02-0204083214-IMP1-01138 CASCOABANOVIEM986              </campoAdicional>
+<campoAdicional nombre="E-MAIL">AGENCIACONCORDIA@MASTERMOTO.COM.EC</campoAdicional>
+<campoAdicional nombre="Direccion_Cliente">MONTERREY BOCANA DEL BUA RTO EL BOLLO 00 CASA DE COLOR BLANCA CORRAL DE CANA</campoAdicional>
+<campoAdicional nombre="Telefono_Cliente">989353439  0989353439</campoAdicional>
+<campoAdicional nombre="Chasis">R1XJCMLB4MA000369</campoAdicional>
+<campoAdicional nombre="Motor">OP163FMLM00393</campoAdicional>
+<campoAdicional nombre="Ramv">UN0163660       Anio  2021</campoAdicional>
+<campoAdicional nombre="Cilindraje">200                                Color  ROJO</campoAdicional>
+<campoAdicional nombre="Origen">CHINA POPULAR                Modelo  TRAIL 200</campoAdicional>
+<campoAdicional nombre="Tonelaje">0,25                                Ejes  2</campoAdicional>
+<campoAdicional nombre="Ruedas">2                              Pasajeros  1</campoAdicional>
+</infoAdicional>
+</factura>
+

@@ -1,0 +1,516 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <title>AppServer - Index</title>
+    <meta content="" name="descriptison">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static '/img/favicon.png' %}" rel="icon">
+    <link href="{% static '/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static '/css/style.css' %}" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: Bocor - v2.0.0
+    * Template URL: https://bootstrapmade.com/bocor-bootstrap-template-nice-animation/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header">
+    <div class="container d-flex">
+
+        <div class="logo mr-auto">
+            <h1 class="text-light"><a href="#">
+            </a></h1>
+
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <a href="index.html"><img src="{% static 'img/logo unnoparts.png' %}" style="width: 170px; height: 200px"
+                                      class="img-fluid"></a>
+        </div>
+
+        <nav class="nav-menu d-none d-lg-block">
+            <ul>
+                <li class="active"><a href="#header">Home</a></li>
+                <!--
+                <li class="drop-down"><a href="">Drop Down</a>
+                    <ul>
+                        <li><a href="#">Drop Down 1</a></li>
+                        <li class="drop-down"><a href="#">Drop Down 2</a>
+                            <ul>
+                                <li><a href="#">Deep Drop Down 1</a></li>
+                                <li><a href="#">Deep Drop Down 2</a></li>
+                                <li><a href="#">Deep Drop Down 3</a></li>
+                                <li><a href="#">Deep Drop Down 4</a></li>
+                                <li><a href="#">Deep Drop Down 5</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Drop Down 3</a></li>
+                        <li><a href="#">Drop Down 4</a></li>
+                        <li><a href="#">Drop Down 5</a></li>
+                    </ul>
+                </li>-->
+                <li><a href="#contact">Contáctanos</a></li>
+
+                <li class="get-started"><a href={% url 'login' %}>Login</a></li>
+            </ul>
+        </nav><!-- .nav-menu -->
+
+    </div>
+</header><!-- End Header -->
+
+<!-- ======= Hero Section ======= -->
+<section id="hero">
+
+    <div class="container">
+        <div class="row d-flex align-items-center">
+            <div class=" col-lg-6 py-5 py-lg-0 order-2 order-lg-1" data-aos="fade-right">
+                <h1>Bienvenidos a una nueva experiencia.</h1>
+                <h2>Encontrarás todas las opciones y recursos disponibles para tus actividades.</h2>
+                <a href="#servicios" class="btn-get-started scrollto">Servicios</a>
+            </div>
+            <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left">
+                <img src="{% static '/img/hero-img.png' %}" class="img-fluid" alt="">
+            </div>
+        </div>
+    </div>
+
+</section><!-- End Hero -->
+
+<main id="main">
+
+    <!-- ======= Clients Section ======= -->
+    <section id="servicios" class="clients section-bg" style="height: 1300px">
+        <div class="container" style=" padding-bottom: 1%; padding-top: 1%;">
+
+            <!-- ======= Productividad ======= -->
+            <div class="container" style="padding: 2% 1%">
+                <div class="client-logo" style="justify-content:center; height: 5%; padding-bottom: 2%">
+                    <img src="{% static '/img/Botones-Portal/productividad titulo.png' %}"
+                         class="img-fluid aos-init aos-animate" alt="" style="height: 40%; width: 40%"
+                         data-aos="flip-right">
+                </div>
+                <div class="row no-gutters clients-wrap clearfix wow fadeInUp"
+                     style="height: 15%; justify-content:center">
+                    <!-- ======= Correo ======= -->
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="https://outlook.office.com/mail/inbox" target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/correo electronico.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+                    <!-- ======= Call Center ======= -->
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="https://login.usw2.pure.cloud/#/authenticate" target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/call center.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+                    <!-- ======= Recursos humanos ======= -->
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="#" target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/recursos humanos.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+                    <!-- ======= Ficha Medica ======= -->
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="http://70.35.204.206/BPM_Produccion_Unnoparts/" target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/ficha medica.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 88%; height: 80%">
+                            </div>
+                        </a>
+                    </div>
+                    <!-- ======= Mesa de Ayuda ======= -->
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="#" target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/mesa de ayuda.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+                <hr style="width:75%;">
+            </div>
+
+            <!-- ======= Facturacion ======= -->
+            <div class="container" style="padding: 2% 1%">
+                <div class="client-logo" style="justify-content:center; height: 5%; padding-bottom: 2%">
+                    <img src="{% static '/img/Botones-Portal/facturacion titulo.png' %}"
+                         class="img-fluid" alt="" style="height: 30%; width: 30%"
+                         data-aos="flip-right">
+                </div>
+                <div class="row no-gutters clients-wrap clearfix wow fadeInUp"
+                     style="height: 15%; justify-content:center">
+
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="https://portal.unnoparts.com.ec/electronicos/rideComprobantes/" target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/facturacion electronica.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="http://facturacion.mastermoto.com.ec/GestionComprobantes/web/login" target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/facturacion multimotos.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="http://auvi.mastermoto.com.ec/GestionComprobantes/web/login"
+                           target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/facturacion.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+                <hr style="width:75%;">
+            </div>
+
+            <!-- ======= Credito ======= -->
+            <div class="container" style="padding: 2% 1%">
+                <div class="client-logo" style="justify-content:center; height: 5%; padding-bottom: 2%">
+                    <img src="{% static '/img/Botones-Portal/credito titulo.png' %}"
+                         class="img-fluid aos-init aos-animate" alt="" style="height: 20%; width: 20%"
+                         data-aos="flip-right">
+                </div>
+                <div class="row no-gutters clients-wrap clearfix wow fadeInUp"
+                     style="height: 15%; justify-content:center">
+
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="https://sercobaco.com.ec/sistema/" target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/Sercobaco credito.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+                <hr style="width:75%;">
+            </div>
+
+            <!-- ======= Recursos ======= -->
+            <div class="container" style="padding: 2% 1%">
+                <div class="client-logo" style="justify-content:center; height: 5%; padding-bottom: 2%">
+                    <img src="{% static '/img/Botones-Portal/recursos titulo.png' %}"
+                         class="img-fluid aos-init aos-animate" alt="" style="height: 20%; width: 20%"
+                         data-aos="flip-right">
+                </div>
+                <div class="row no-gutters clients-wrap clearfix wow fadeInUp"
+                     style="height: 15%; justify-content:center">
+
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="http://www.amt.gob.ec/index.php/component/content/article/30-destacados/368-valores-a-pagar-inicio.html"
+                           target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/AMT.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="http://www.amt.gob.ec/index.php/servicios/matriculacion-vehicular-menu/pasos-para-matricular-vehiculos-exonerados.html?id=122"
+                           target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/ANT.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="http://consultas.funcionjudicial.gob.ec/informacionjudicial/public/informacion.jsf"
+                           target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/funcion judicial.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="http://nextcloud.mastermoto.com.ec/nextcloud" target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/nube unnoparts.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="{% url 'fac:imagenesProforma' %}" target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/img. mastermoto.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="{% url 'fac:imagenesProforma' %}" target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/imagenes auvi.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+                <hr style="width:75%;">
+            </div>
+
+
+            <!-- ======= Mercadeo ======= -->
+            <div class="container" style="padding: 2% 1%">
+                <div class="client-logo" style="justify-content:center; height: 5%; padding-bottom: 2%">
+                    <img src="{% static '/img/Botones-Portal/mercadeo titulo.png' %}"
+                         class="img-fluid aos-init aos-animate" alt="" style="height: 20%; width: 20%"
+                         data-aos="flip-right">
+                </div>
+                <div class="row no-gutters clients-wrap clearfix wow fadeInUp"
+                     style="height: 15%; justify-content:center">
+
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="https://www.mastermoto.com.ec/" target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/web mastermoto.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="https://auvielectrodomesticos.com.ec/" target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/web auvi.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6" style="height: 100%">
+                        <a href="https://portal.unnoparts.com.ec/Api/listDetalleProductoWeb/"
+                           target="_blank">
+                            <div class="client-logo" style="height: 100%; padding: 5% 5%;">
+                                <img src="{% static '/img/Botones-Portal/marketing.png' %}"
+                                     class="img-fluid aos-init aos-animate" alt=""
+                                     data-aos="flip-right" style="width: 80%; height: 70%">
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+                <hr style="width:75%;">
+            </div>
+        </div>
+    </section>
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact section-bg">
+        <div class="container">
+
+            <div class="section-title">
+                <h2 data-aos="fade-in">Contáctanos</h2>
+                <p data-aos="fade-in">Recuerda que tenemos un espacio para escucharte, si quieres dejarnos algún
+                    comentario, queja o felicitación para algún departamento o persona, este es el espacio para hacerlo.
+                    Recuerda que este formulario NO es para solicitudes o soporte de sistema.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="info-box" data-aos="fade-up">
+                                <i class="bx bx-map"></i>
+                                <h3>Nuestra Dirección</h3>
+                                <p>Manuel J. Calle 2-14, Cuenca.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-box mt-4" data-aos="fade-up" data-aos-delay="100">
+                                <i class="bx bx-envelope"></i>
+                                <h3>Email</h3>
+                                <p>info@mastermoto.com.ec</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-box mt-4" data-aos="fade-up" data-aos-delay="100">
+                                <i class="bx bx-phone-call"></i>
+                                <h3>Llámanos</h3>
+                                <p> 07 281 5224</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-6">
+                    <form action="{% url 'notificaciones:sendEmailContact' %}" method="post" role="form"
+                          class="php-email-form"
+                          data-aos="fade-up">
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Tu nombre"
+                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars"/>
+                                <div class="validate"></div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <input type="email" class="form-control" name="email" id="email"
+                                       placeholder="Tu Email" data-rule="email"
+                                       data-msg="Please enter a valid email"/>
+                                <div class="validate"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="asunto" id="subject" placeholder="Asunto"
+                                   data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject"/>
+                            <div class="validate"></div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="msj" rows="5" data-rule="required"
+                                      data-msg="Please write something for us" placeholder="Mensaje"></textarea>
+                            <div class="validate"></div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Mensaje enviado, gracias!</div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit">Enviar Mensaje</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+
+    <div class="footer-top">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row  justify-content-center">
+                <div class="col-lg-6">
+                    <h3>AppServer</h3>
+                </div>
+            </div>
+
+            <!--
+            <div class="row footer-newsletter justify-content-center">
+                <div class="col-lg-6">
+                    <form action="" method="post">
+                        <input type="email" name="email" placeholder="Enter your Email"><input type="submit"
+                                                                                               value="Subscribe">
+                    </form>
+                </div>
+            </div>
+            -->
+
+            <div class="social-links">
+                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container footer-bottom clearfix">
+        <div class="copyright">
+            &copy; Copyright <strong><span>AppServer</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/bocor-bootstrap-template-nice-animation/ -->
+
+        </div>
+    </div>
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+<script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
+<script src="{% static 'vendor/aos/aos.js' %}"></script>
+
+<!-- Template Main JS File -->
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+
+</html>

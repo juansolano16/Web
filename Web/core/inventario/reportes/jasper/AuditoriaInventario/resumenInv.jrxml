@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resumenInv" pageWidth="500" pageHeight="842" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ee24a4b1-eb80-408a-a698-6bc1b39c664b">
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PEMPRESA" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PCOD_AGENCIA" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select aa.categoria,
+       aa.linea,
+       sum(aa.sobrante) sobrante,
+       sum(aa.faltante) faltante,
+       sum(aa.SN) SN,
+       sum(aa.sobrante) + sum(aa.faltante) + sum(aa.SN) total
+from (
+        select a.categoria,
+               c.nombre linea,
+               decode(a.categoria, 'Repuesto',
+                                   decode(a.sobrante, 'S', sum(a.cantidad), 0),
+                                   decode(a.sobrante, 'S', count (a.cod_producto), 0)
+                      ) sobrante,
+               decode(a.categoria, 'Repuesto',
+                                   decode(a.sobrante, 'N', sum(a.cantidad - a.CANTIDAD_REG_R + a.RAYON_R + a.TRANSFERENCIA_R), 0),
+                                   decode(a.sobrante, 'N', count (a.cod_producto), 0)
+                      ) faltante,
+               decode(a.categoria, 'Repuesto',
+                                   decode(a.sobrante, '-', sum(a.cantidad), 0),
+                                   decode(a.sobrante, '-', count (a.cod_producto), 0)
+                      ) SN
+        from stock.vt_reporte_auditoria_general a
+        left join stock.producto b on a.empresa = b.empresa and a.cod_producto = b.cod_producto
+        left join stock.marca c on b.empresa = c.empresa and b.COD_MARCA = c.COD_MARCA
+        where a.empresa = $P{PEMPRESA}
+        and a.cod_agencia = $P{PCOD_AGENCIA}
+        group by a.categoria, c.nombre, a.sobrante
+) aa
+group by aa.categoria, aa.linea
+order by aa.categoria]]>
+	</queryString>
+	<field name="CATEGORIA" class="java.lang.String"/>
+	<field name="LINEA" class="java.lang.String"/>
+	<field name="SOBRANTE" class="java.math.BigDecimal"/>
+	<field name="FALTANTE" class="java.math.BigDecimal"/>
+	<field name="SN" class="java.math.BigDecimal"/>
+	<field name="TOTAL" class="java.math.BigDecimal"/>
+	<variable name="vsobrante" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SOBRANTE}]]></variableExpression>
+	</variable>
+	<variable name="vfaltante" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{FALTANTE}]]></variableExpression>
+	</variable>
+	<variable name="vsn" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SN}]]></variableExpression>
+	</variable>
+	<variable name="vtotal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="d2a1f4c0-3e70-4c02-8208-092d8ea66a0d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CATEGORIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="139" height="20" uuid="62552bbb-7ae6-43d8-974a-abced2c295fe"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LINEA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="0" width="60" height="20" uuid="3ec3653f-5d09-4aab-9a62-c9812a9da79b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOBRANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="0" width="60" height="20" uuid="9b077f37-5144-481e-b8be-682af48cde24"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FALTANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="0" width="60" height="20" uuid="1ce6e265-6bff-4400-9f09-85082b224a65"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="0" width="60" height="20" uuid="886f5cf6-ea4e-4bec-815c-d6722e613e4b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15">
+			<textField>
+				<reportElement x="1" y="0" width="99" height="15" uuid="64c47175-c993-41de-a098-c213eec8f405"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CATEGORIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="139" height="15" uuid="8184845c-7eba-423b-a45e-283dba2069bd"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{LINEA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="299" y="0" width="60" height="15" uuid="1b5bbfa3-d4d9-44ee-912e-8dcfa04f9d9c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SOBRANTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="359" y="0" width="60" height="15" uuid="e9a1275e-425b-4c26-9c75-69830b8a5d3a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FALTANTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="239" y="0" width="60" height="15" uuid="1972d369-a28b-4543-a2f5-ab20a03b0350"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="419" y="0" width="60" height="15" uuid="f160d884-08fc-4b36-b0ec-b3bfe83f5351"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement x="299" y="4" width="60" height="20" uuid="f46c868c-5192-4771-a35a-2a2eb8d90caa"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{vsobrante}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="3" width="478" height="1" uuid="e015b8aa-33c6-4798-9317-8e6d24b49bc8"/>
+			</line>
+			<textField>
+				<reportElement x="359" y="4" width="60" height="20" uuid="da7eebbf-0f57-4467-aeee-40bd2ee07e87"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{vfaltante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="239" y="4" width="60" height="20" uuid="a2cabdb0-75d1-4454-b778-02e09a0b432c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{vsn}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="419" y="4" width="60" height="20" uuid="f61df9ac-91f8-4a3f-a4eb-c9afba0d6741"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{vtotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

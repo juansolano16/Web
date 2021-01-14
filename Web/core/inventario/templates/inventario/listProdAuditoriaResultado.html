@@ -1,0 +1,154 @@
+{% extends 'list.html' %}
+{% load static %}
+{% load embed %}
+
+{% block head_list_js %}
+    <!-- Librerias propias -->
+    <script src="{% static 'inventario/js/listProdAuditoriaMotoResultado.js' %}"></script>
+
+{% endblock %}
+
+{% block head_list_css %}
+{% endblock %}
+
+{% block content %}
+    {% block cabecera_list %}
+    {% endblock %}
+
+    {% block body_list %}
+        <ul class="nav nav-tabs">
+            {% for key in tabs %}
+                <li class="nav-item">
+                    <a role="tab" data-toggle="tab" class="nav-link {% if key.id == 'tab-1'%} active {% endif %}" href="#{{ key.id }}">{{ key.nom }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <br>
+        <div class="tab-content">
+            {% for key in tabs %}
+                <div role="tabpanel" class="tab-pane {% if key.id == 'tab-1'%} active {% endif %}" id="{{ key.id }}">
+                    {% embed 'datatable.html' with idtable=key.id_tabla %}
+                        {% block columns %}
+                            <tr>
+                                <th scope="col" style="width: 5%;">Codigo</th>
+                                <th scope="col" style="width: 30%;">Agencia</th>
+                                <th scope="col" style="width: 5%;">Total</th>
+                                <th scope="col" style="width: 5%;">Registrados</th>
+                                <th scope="col" style="width: 20%;">Porcentaje (%)</th>
+                                <th scope="col" style="width: 5%;">Sobrante</th>
+                                <th scope="col" style="width: 5%;">Faltante</th>
+                                <th scope="col" style="width: 15%;">Reporte</th>
+                            </tr>
+                        {% endblock %}
+                    {% endembed %}
+                </div>
+            {% endfor %}
+        </div>
+
+
+        <!-- Modal Registro de inventario Moto -->
+        {% load widget_tweaks %}
+        {% embed 'modalForm.html' with idtable='modalform1' idForm='modalformd1' idAction='searchInvantarioFinal' %}
+            {% block body_modal %}
+                {% embed 'datatable.html' with idtable='modal_tabla1' %}
+                    {% block columns %}
+                        <tr>
+                            <th scope="col" style="width: 10%;">Codigo Producto</th>
+                            <th scope="col" style="width: 15%;">Codigo Serie</th>
+                            <th scope="col" style="width: 5%;">Es Sobrante</th>
+                            <th scope="col" style="width: 5%;">Es Faltante</th>
+                            <th scope="col" style="width: 5%;">Tiene Prod</th>
+                            <th scope="col" style="width: 5%;">Tiene Kit</th>
+                            <th scope="col" style="width: 10%;">Observacion</th>
+                            <th scope="col" style="width: 30%;">Observacion2</th>
+                        </tr>
+                    {% endblock %}
+                {% endembed %}
+            {% endblock %}
+
+            {% block footer_modal %}
+            {% endblock %}
+        {% endembed %}
+
+        <!-- Modal Registro de inventario Repuesto-->
+        {% load widget_tweaks %}
+        {% embed 'modalForm.html' with idtable='modalform2' idForm='modalformd2' idAction='searchInvantarioFinal' %}
+            {% block body_modal %}
+                {% embed 'datatable.html' with idtable='modal_tabla2' %}
+                    {% block columns %}
+                        <tr>
+                            <th scope="col" style="width: 10%;">Codigo Producto</th>
+                            <th scope="col" style="width: 5%;">Cantidad Sistema</th>
+                            <th scope="col" style="width: 5%;">Cantidad Registrada</th>
+                            <th scope="col" style="width: 5%;">Es Sobrante</th>
+                            <th scope="col" style="width: 5%;">Es Faltante</th>
+                            <th scope="col" style="width: 5%;">Tiene Defecto</th>
+                            <th scope="col" style="width: 5%;">Por recibir</th>
+                            <th scope="col" style="width: 10%;">Observacion</th>
+                            <th scope="col" style="width: 30%;">Observacion2</th>
+                        </tr>
+                    {% endblock %}
+                {% endembed %}
+            {% endblock %}
+
+            {% block footer_modal %}
+            {% endblock %}
+        {% endembed %}
+
+        <!-- Modal Registro de inventario Auvi-->
+        {% load widget_tweaks %}
+        {% embed 'modalForm.html' with idtable='modalform3' idForm='modalformd3' idAction='searchInvantarioFinal' %}
+            {% block body_modal %}
+                {% embed 'datatable.html' with idtable='modal_tabla3' %}
+                    {% block columns %}
+                        <tr>
+                            <th scope="col" style="width: 10%;">Cod_Producto</th>
+                            <th scope="col" style="width: 20%;">Serie</th>
+                            <th scope="col" style="width: 5%;">Es Sobrante</th>
+                            <th scope="col" style="width: 5%;">Es Faltante</th>
+                            <th scope="col" style="width: 5%;">Tiene desperfecto</th>
+                            <th scope="col" style="width: 5%;">Es promocional</th>
+                            <th scope="col" style="width: 5%;">Garantia/ Tramites</th>
+                            <th scope="col" style="width: 5%;">Por recibir</th>
+                            <th scope="col" style="width: 10%;">Observacion</th>
+                            <th scope="col" style="width: 30%;">Observacion2</th>
+                        </tr>
+                    {% endblock %}
+                {% endembed %}
+            {% endblock %}
+
+            {% block footer_modal %}
+            {% endblock %}
+        {% endembed %}
+
+    {% endblock %}
+
+{% endblock %}
+
+
+{% block buttons_list %}
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var tabs = {{ tabs|safe }};
+        var select_tab = tabs[0].nom;
+
+        // Inicializar Variables
+        $(function () {
+            $('.nav-tabs a').on('shown.bs.tab', function (event) {
+                select_tab = $('.nav-tabs .active').text();
+                CargarInv();
+            });
+            CargarInv();
+        });
+
+        function CargarInv() {
+            var url = window.location.pathname;
+            var action = select_tab === tabs[0].nom ? "searchInventarioFinal" : select_tab === tabs[1].nom ? "searchInventarioRep" : "searchInventarioAuvi";
+            var data = {'action': action,}
+            sendDataAjax(url, data, recibeJsonInv);
+        };
+    </script>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'list.html' %}
+{% load static %}
+{% load embed %}
+
+{% block head_list_css %}
+    <link href="{% static 'lib/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'lib/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block head_list_js %}
+    <script src="{% static 'lib/select2-4.0.13/js/select2.min.js' %}"></script>
+    <script src="{% static 'lib/select2-4.0.13/js/i18n/es.js' %}"></script>
+
+    <script src="{% static 'ProductoWeb/js/list.js' %}"></script>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 10%;">Sec</th>
+        <th scope="col" style="width: 15%;">Codigo</th>
+        <th scope="col" style="width: 25%;">Producto</th>
+        <th scope="col" style="width: 20%;">Caracteristica</th>
+        <th scope="col" style="width: 30%;">Detalle</th>
+        <th scope="col" style="width: 5%;">Editar</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+{% endblock %}
+
+
+{% block buttons_list %}
+    <!-- Modal Edit-->
+    {% load widget_tweaks %}
+    {% embed 'modalForm.html' with idtable='modalFormEdit' idForm='modalFormE' %}
+        {% block body_modal %}
+            {% for field in form_update_det.visible_fields %}
+                <div class="form-group">
+                    <label for="email">{{ field.label }}:</label>
+                    {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                </div>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+
+    <!-- Modal Add-->
+    {% load widget_tweaks %}
+    {% embed 'modalForm.html' with idtable='modalFormAdd' idForm='modalFormA' %}
+        {% block body_modal %}
+            {% for field in form_add_det.visible_fields %}
+                <div class="form-group">
+                    <label for="email">{{ field.label }}:</label>
+                    {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                </div>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+
+    <a href="#" class="btn btn-primary btn-flat" onclick="addProductoDetalle(this)">
+        <i class="fas fa-plus"></i> Agregar
+    </a>
+{% endblock %}
+
+
+
+{% block javascript %}
+    <script>
+        $('.select2').select2({
+            theme: "bootstrap4",
+            language: 'es'
+        });
+
+        function addProductoDetalle(element) {
+            $('input[name="action"]').val('add_det');
+            modal_title.find('span').html('Agregar Producto');
+            modal_title.find('i').removeClass().addClass('fas fa-plus');
+            $('select[name="cod_producto"]').val('');
+            $('select[name="caracteristica"]').val('');
+            $('input[name="detalle"]').val('');
+            $('#modalFormAdd').modal('show');
+        };
+
+        function updateDetalle(element) {
+            $('input[name="action"]').val('updata_det');
+            modal_title.find('span').html('Actualizar Detalle');
+            modal_title.find('i').removeClass().addClass('fas fa-edit');
+
+            //obtiene la fila y datos del registro seleccionado
+            var tr = tabla.cell($(element).closest('td, li')).index();
+            var data = tabla.row(tr.row).data();
+
+            console.log(data);
+
+            $('input[name="cod_producto"]').val(data.cod_producto);
+            $('input[name="secuencia"]').val(data.secuencia);
+            $('input[name="caracteristicas"]').val(data.caracteristicas);
+            $('input[name="detalle"]').val(data.detalle);
+            $('#modalFormEdit').modal('show');
+        };
+
+        $('#modalFormA').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = new FormData(this);
+            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+                $('#modalFormA').modal('hide');
+                tabla.ajax.reload();
+            });
+        });
+
+        $('#modalFormE').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = new FormData(this);
+            submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+                $('#modalFormEdit').modal('hide');
+                tabla.ajax.reload();
+            });
+        });
+    </script>
+{% endblock %}

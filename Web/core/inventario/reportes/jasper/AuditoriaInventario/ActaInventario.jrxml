@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ActaInventario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="20" uuid="da04516a-2d63-4253-b53e-3b63ec9bdaf3">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="457"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\juansolano\\OneDrive - Grupo Vazquez\\Mastermoto\\ReportesJasper\\Auditoria"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PCOD_AGENCIA" class="java.lang.String"/>
+	<parameter name="PEMPRESA" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IMAGE_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\juansolano\\OneDrive - Grupo Vazquez\\Mastermoto\\ReportesJasper\\imagenes"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select a.empresa,
+       a.tipo_comprobante,
+       a.cod_comprobante,
+       a.cod_agencia,
+       b.nombre agencia,
+       b.observaciones ciudad,
+       b.direccion,
+       a.fecha,
+
+       (replace(to_char(a.fecha, 'HH24:MI'), ':', 'h') || ' horas del dia ' ||
+       to_char(a.fecha, 'dd', 'nls_date_language=spanish') || ' de ' ||
+       to_char(a.fecha, 'MONTH', 'nls_date_language=spanish') || ' del ' ||
+       to_char(a.fecha, 'yyyy', 'nls_date_language=spanish')) fecha2,
+
+       decode(a.CERRADO, 'N',
+               (replace(to_char(sysdate, 'HH24:MI'), ':', 'h') || ' horas del dia ' ||
+               to_char(sysdate, 'dd', 'nls_date_language=spanish') || ' de ' ||
+               to_char(sysdate, 'MONTH', 'nls_date_language=spanish') || ' del ' ||
+               to_char(sysdate, 'yyyy', 'nls_date_language=spanish')),
+
+               (replace(to_char(a.FECHA_AUD, 'HH24:MI'), ':', 'h') || ' horas del dia ' ||
+               to_char(a.FECHA_AUD, 'dd', 'nls_date_language=spanish') || ' de ' ||
+               to_char(a.FECHA_AUD, 'MONTH', 'nls_date_language=spanish') || ' del ' ||
+               to_char(a.FECHA_AUD, 'yyyy', 'nls_date_language=spanish'))
+               )fechaNow,
+
+       a.cod_usuario,
+       d.apellido || ' ' || d.nombre auditor,
+       d.cod_personal ci_auditor,
+
+       nvl(c.ci_jefe_agencia, '-') ci_jefe_agencia,
+       nvl(c.jefe_agencia, '-') jefe_agencia
+from stock.st_inventario_resultado a
+join computo.tg_agencia b on a.empresa = b.empresa and a.cod_agencia = b.cod_agencia
+left join (select q.empresa,
+                  q.COD_PERSONAL ci_jefe_agencia,
+                  q.APELLIDO || ' ' ||q.NOMBRE jefe_agencia,
+	        q.cod_agencia
+	from jaher.rh_personal q
+	where q.codigo_cargo in (136)
+	and q.activo = 'S'
+          and q.cod_agencia = $P{PCOD_AGENCIA}
+	and rownum = 1) c on c.empresa = a.empresa and c.cod_agencia = a.cod_agencia
+left join jaher.rh_personal d on a.empresa = d.empresa and a.cod_usuario = d.usuario_oracle
+          and d.activo = 'S'
+where a.empresa = $P{PEMPRESA}
+and a.cod_agencia = $P{PCOD_AGENCIA}]]>
+	</queryString>
+	<field name="EMPRESA" class="java.math.BigDecimal"/>
+	<field name="TIPO_COMPROBANTE" class="java.lang.String"/>
+	<field name="COD_COMPROBANTE" class="java.lang.String"/>
+	<field name="COD_AGENCIA" class="java.math.BigDecimal"/>
+	<field name="AGENCIA" class="java.lang.String"/>
+	<field name="CIUDAD" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="FECHA" class="java.sql.Timestamp"/>
+	<field name="FECHA2" class="java.lang.String"/>
+	<field name="FECHANOW" class="java.lang.String"/>
+	<field name="COD_USUARIO" class="java.lang.String"/>
+	<field name="AUDITOR" class="java.lang.String"/>
+	<field name="CI_AUDITOR" class="java.lang.String"/>
+	<field name="CI_JEFE_AGENCIA" class="java.lang.String"/>
+	<field name="JEFE_AGENCIA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="187" splitType="Stretch">
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement key="image-1" mode="Transparent" x="0" y="0" width="115" height="81" uuid="45bd4609-dadd-4901-a269-396c26fcc6ef"/>
+				<imageExpression><![CDATA[$P{IMAGE_DIR} + "/logo_web.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="40" width="555" height="20" uuid="ff370d5c-efd7-4697-a432-4981f1152b2f"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACTA DE TOMA FISICA DE INVENTARIOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="73" width="555" height="20" uuid="5d5f89bf-2e48-40ce-b774-6fb7c745a2d2"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA["Acta No. " + $F{COD_COMPROBANTE} + " de toma física de inventarios."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="101" width="555" height="48" uuid="258968be-8c59-4bae-a0a0-d2cf14f062d2"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA["En la ciudad de "+$F{CIUDAD}+" siendo las " + $F{FECHA2} + ", en las instalaciones \"AGENCIA " + $F{AGENCIA} + "\" que mantiene la empresa Unnoparts S.A. ubicadas en las calles " + $F{DIRECCION}+", se procede a realizar la toma física de inventarios."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="159" width="555" height="19" uuid="5a8da3a3-6da7-4dea-91e5-2ed3d0dd9994"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA["De la toma física de inventarios llevada a cabo en esta agencia se reportan los siguientes hallazgos:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="325" y="17" width="230" height="15" uuid="0687035a-7bb9-495b-b251-701b867dc0f8"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AGENCIA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="315" splitType="Stretch">
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="64" isRemoveLineWhenBlank="true" uuid="e7efa370-5090-49c9-a489-5c916e4e4e78"/>
+				<subreportParameter name="PHEADER">
+					<subreportParameterExpression><![CDATA["Faltantes de Inventario"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PSUMARY">
+					<subreportParameterExpression><![CDATA["Los artículos listados anteriormente no fueron encontrados en la revisión física de inventarios."]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PEMPRESA">
+					<subreportParameterExpression><![CDATA[$P{PEMPRESA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PCOD_AGENCIA">
+					<subreportParameterExpression><![CDATA[$P{PCOD_AGENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PFALTANTE">
+					<subreportParameterExpression><![CDATA["S"]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/resultadoInv.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="76" width="555" height="64" isRemoveLineWhenBlank="true" uuid="6fdad9f1-c509-4ded-8a72-81cea0732ef6"/>
+				<subreportParameter name="PHEADER">
+					<subreportParameterExpression><![CDATA["Sobrantes"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PSUMARY">
+					<subreportParameterExpression><![CDATA["Los productos listados anteriormente no constan dentro de los registros del kardex de inventario perteneciente a esta agencia, pero se encuentran físicamente." + "\n\nLos productos enlistados a continuación mantienen diferentes observaciones en su estado, los cuales se describen en el casillero \"Observación\"."]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PEMPRESA">
+					<subreportParameterExpression><![CDATA[$P{PEMPRESA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PCOD_AGENCIA">
+					<subreportParameterExpression><![CDATA[$P{PCOD_AGENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PFALTANTE">
+					<subreportParameterExpression><![CDATA["N"]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/resultadoInv.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="154" width="555" height="64" isRemoveLineWhenBlank="true" uuid="b020707b-6b46-4284-afc0-392523659ffd"/>
+				<subreportParameter name="PHEADER">
+					<subreportParameterExpression><![CDATA["Productos con novedades"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PSUMARY">
+					<subreportParameterExpression><![CDATA["Resumen del inventario."]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PEMPRESA">
+					<subreportParameterExpression><![CDATA[$P{PEMPRESA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PCOD_AGENCIA">
+					<subreportParameterExpression><![CDATA[$P{PCOD_AGENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PFALTANTE">
+					<subreportParameterExpression><![CDATA["-"]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/resultadoInv.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="25" y="234" width="530" height="64" isRemoveLineWhenBlank="true" uuid="057e4705-a8e3-427c-800f-e35e43f34c89"/>
+				<subreportParameter name="PEMPRESA">
+					<subreportParameterExpression><![CDATA[$P{PEMPRESA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PCOD_AGENCIA">
+					<subreportParameterExpression><![CDATA[$P{PCOD_AGENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/resumenInv.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="195" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="31" width="555" height="52" uuid="d0b65586-207e-4a7a-a7fd-99624a73badd"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA["Siendo las " + $F{FECHANOW} + " se da por terminado con la presente toma física de inventario, reflejando los principales hallazgos en la presente acta. La responsabilidad de éste inventario que reposa en la agencia es del personal que labora en ésta, y la reponsabilidad de la toma física es del responsable asignado."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="46" y="130" width="215" height="20" uuid="dc7d9228-305a-41ce-b0c2-6c2dabf765ab"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["C.I. " + $F{CI_JEFE_AGENCIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="46" y="150" width="215" height="20" uuid="c95e2252-3432-4015-bea1-5c021dfcb7e3"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JEFE_AGENCIA}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="39" y="123" width="188" height="1" uuid="18cdbd4d-3f38-4aef-971d-14f8961c9ab0"/>
+			</line>
+			<staticText>
+				<reportElement x="46" y="170" width="215" height="20" uuid="4507695e-9e3c-4c92-97a7-0c4289da9039"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jefe de Agencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="170" width="208" height="20" uuid="3c52e8b6-92f8-46bf-b844-2ee5e7331b20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Responsable Asignado]]></text>
+			</staticText>
+			<line>
+				<reportElement x="325" y="123" width="188" height="1" uuid="c406a442-9ade-4ae2-b91e-ffb068b127b3"/>
+			</line>
+			<textField>
+				<reportElement x="325" y="150" width="208" height="20" uuid="010e17e8-e81d-4884-9b12-c0ec5ae4d085"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AUDITOR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="325" y="130" width="208" height="20" uuid="6a43fc09-7eac-44ae-9f05-436fad05b1fc"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["C.I. " + $F{CI_AUDITOR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="7ec81ddd-be66-423b-a555-0303adc56fa6"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[* Expresados en valores absolutos.]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

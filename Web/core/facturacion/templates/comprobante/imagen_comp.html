@@ -1,0 +1,150 @@
+{% extends 'list.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head_list_js %}
+    <!-- Librerias para Autocomplete -->
+    <script src="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'comprobante/js/prodImgComp.js' %}"></script>
+
+    <!-- Librerias para iconos de cargar archivos -->
+    <script src="{% static 'lib/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js' %}"></script>
+
+    <!-- Librerias para JqueryLigthGalery -->
+    <script src="{% static 'lib/jquery_ligthGalery/js/lightgallery.min.js' %}"></script>
+
+{% endblock %}
+
+{% block head_list_css %}
+    <!-- Librerias para Autocomplete -->
+    <link href="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet"/>
+
+    <!-- Librerias para JqueryLigthGalery -->
+    <link type="text/css" rel="stylesheet" href="{% static 'lib/jquery_ligthGalery/css/lightgallery.min.css' %}"/>
+
+{% endblock %}
+
+{% block content %}
+    <main class="page projects-page">
+        <section class="portfolio-block projects-cards">
+            <div class="container">
+                <div class="heading">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-boxes"></i> Detalle del Comprobante</h3>
+                        <div class="input-group" style="padding-top: 10px">
+                            <input type="text" class="form-control" name="search"
+                                   placeholder="Ingrese el numero de comprobante"
+                                   autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered" id="tblComprobante">
+                            <thead>
+                            <tr>
+                                <th>Comprobante</th>
+                                <th>Fecha</th>
+                                <th>Agencia</th>
+                                <th>Cedula</th>
+                                <th>Persona</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                </div>
+
+                <form id="formImg" method="post" enctype="multipart/form-data" action=".">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="subirImg">
+
+                    {% for field in form_img.hidden_fields %}
+                        {{ field }}
+                    {% endfor %}
+
+                    <div class="row" id="img_cli" style="justify-content: center">
+                        {% for key in lista %}
+                            <div class="col-md-6 col-lg-3 col-sm-3">
+                                <div class="card border-0" style="height:250px">
+                                    <!-- Imagen Cliete -->
+                                    <div class="item img_div" id="div_img{{ key.id }}"  data-src="{% static  'img/empty.png' %}" style="margin: 0 auto;">
+                                        <img class="scale-on-hover img_img" id="img{{ key.id }}"
+                                             src="{% static  'img/empty.png' %}"
+                                             alt="Card Image" width="100" height="150"/>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <h6><a href="#">{{ key.nom }}</a></h6>
+                                    </div>
+
+                                    {% for field in form_img.visible_fields %}
+                                        {% render_field field id=key.id %}
+                                    {% endfor %}
+
+                                    <a href="#" type="butttom" class="btn btn-primary btn-flat"
+                                       onclick="Subir({{ key.id }})">
+                                        <i class="fas fa-plus"></i> Subir
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+{% endblock %}
+
+
+{% block buttons_list %}
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var comp = $('input[name="cod_comprobante"]');
+
+        $('#tblComprobante').DataTable({
+            responsive: true,
+            autoWidth: false,
+            searching: false,
+            paging: false,
+            info: false,
+        });
+
+        $(":file").filestyle({
+            size: "sm",
+            text: "Imagen",
+            btnClass: "btn-primary",
+            buttonBefore: true,
+            placeholder: "No Imagen"
+        });
+
+        $('#img_cli').lightGallery({
+            selector: '.item'
+        });
+
+        function Subir(element) {
+            $('input[name="cod_tipo_documento"]').val(element);
+
+            if (comp.val() && $("#" + element).val()) {
+                var f = document.forms['formImg'];
+                var parametros = new FormData(f);
+                submit_with_ajax(url = window.location.pathname,
+                    title = 'Notificación',
+                    content = '¿Estas seguro de subir imagen en el comprobante: ' + comp.val() + '?',
+                    parameters = parametros,
+                    callback = ReloadImg,
+                );
+            } else {
+                message_error('Aun no se selecciona un comprobante o imagen');
+            }
+            ;
+        };
+
+        function ReloadImg() {
+            cargarImgComp(comp.val());
+        };
+
+    </script>
+{% endblock %}

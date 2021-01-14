@@ -1,0 +1,64 @@
+{% extends 'reporte.html' %}
+
+{% block form_header %}
+{% endblock %}
+
+{% block form_body %}
+    <div class="card-body">
+        <div class="form-group">
+            <label> TIPO BENEFICIO: </label>
+            {{ form.beneficio }}
+        </div>
+        <div class="form-group">
+            <label> REGION: </label>
+            {{ form.region }}
+        </div>
+        <div class="form-group">
+            <label> PERIODO: </label>
+            {{ form.periodo }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block form_footer %}
+    <div class="card-footer">
+        <div style="color: #FFFFFF; text-align: center">
+            <a class="btn btn-primary btn-lg" onclick="generarReporte(this)" id="btn_gen">
+                <span id="item_cargando" role="status" aria-hidden="true"></span>
+                <span id="item_texto">Generar Reporte</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascript_reporte %}
+    <script>
+        $('.select2').select2({
+            theme: "bootstrap4",
+            language: 'es'
+        });
+
+        var select_beneficio = $('select[name="beneficio"]');
+        var select_region = $('select[name="region"]')
+        var select_periodo = $('select[name="periodo"]')
+
+        select_beneficio.on('change', function () {
+            if (select_beneficio.val() == "D3") select_region.attr('disabled','True');
+            else select_region.removeAttr("disabled");;
+        });
+
+        function generarReporte(element) {
+            console.log('Generando Reporte');
+
+            if (!select_beneficio.val() & !select_region.val() & !select_periodo.val()) {
+                message_error('Revisar los datos');
+                return false;
+            }
+            $('input[name="action"]').val('genReporte')
+            data_ = $('#F50-001').serialize();
+            genArchivo(window.location.pathname, data_, "{{ nombre_reporte }}");
+        }
+
+    </script>
+{% endblock %}

@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RBeneficiosD3" pageWidth="2150" pageHeight="2380" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="2150" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="0d1ac288-762f-4286-8766-fa468cc5f7d6">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.xls.white.page.background" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.collapse.row.span" value="true"/>
+	<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.graphics" value="false"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Unnopartsdb"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="IMAGE_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\juansolano\\OneDrive - Grupo Vazquez\\Mastermoto\\ReportesJasper\\imagenes"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PERIODO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select cedula,
+       empleado,
+       region,
+       agencia,
+       cargo,
+       f_ingreso,
+       periodo,
+       NVL("12_VALOR", 0) "12_VALOR",
+       NVL("12_FP", ' ') "12_FP",
+       NVL("01_VALOR", 0) "01_VALOR",
+       NVL("01_FP", ' ') "01_FP",
+       NVL("02_VALOR", 0) "02_VALOR",
+       NVL("02_FP", ' ') "02_FP",
+       NVL("03_VALOR", 0) "03_VALOR",
+       NVL("03_FP", ' ') "03_FP",
+       NVL("04_VALOR", 0) "04_VALOR",
+       NVL("04_FP", ' ') "04_FP",
+       NVL("05_VALOR", 0) "05_VALOR",
+       NVL("05_FP", ' ') "05_FP",
+       NVL("06_VALOR", 0) "06_VALOR",
+       NVL("06_FP", ' ') "06_FP",
+       NVL("07_VALOR", 0) "07_VALOR",
+       NVL("07_FP", ' ') "07_FP",
+       NVL("08_VALOR", 0) "08_VALOR",
+       NVL("08_FP", ' ') "08_FP",
+       NVL("09_VALOR", 0) "09_VALOR",
+       NVL("09_FP", ' ') "09_FP",
+       NVL("10_VALOR", 0) "10_VALOR",
+       NVL("10_FP", ' ') "10_FP",
+       NVL("11_VALOR", 0) "11_VALOR",
+       NVL("11_FP", ' ') "11_FP"
+from
+        (select a.cod_personal cedula,
+               a.APELLIDO || ' ' ||a.nombre empleado,
+               a.region,
+               b.nombre agencia,
+               c.DESCRIPCION cargo,
+               a.FECHA_INGRESO f_ingreso,
+               e.valor,
+               to_char(d.fecha, 'mm') mes,
+               decode(e.COD_BENEFICIO, 'D3', 'ACUMULA', 'PAGO ROL') fp,
+               f.PERIODO
+        from jaher.rh_personal a,
+             computo.tg_agencia b,
+             jaher.rh_cargos c,
+             jaher.rh_comprobante d,
+             jaher.RH_MOVIMIENTO e,
+             jaher.RH_PERIODO_DECIMOS f
+        where a.empresa = 2
+        and a.empresa = b.empresa
+        and a.COD_AGENCIA = b.COD_AGENCIA
+        and a.empresa = c.CODIGO_EMPRESA
+        and a.CODIGO_CARGO = c.CODIGO_CARGO
+        and a.empresa = d.empresa
+        and a.COD_TIPO_PERSONA = d.cod_tipo_persona
+        and a.COD_PERSONAL = d.cod_persona
+        and d.empresa = e.empresa
+        and d.tipo_comprobante = e.tipo_comprobante
+        and d.cod_comprobante = e.cod_comprobante
+        and d.IDSEC = e.IDSEC
+        and e.COD_BENEFICIO in ('3D','D3')
+        --and a.COD_PERSONAL = '010662526-2'
+        and d.empresa = f.empresa
+        and f.TIPO = 'D3'
+        and to_char(d.FECHA, 'yyyymm') between f.FDESDE and f.FHASTA
+        --and to_char(d.FECHA, 'yyyymm') between 201912 and 202011
+) pivot ( sum (valor) valor, max(fp) fp for mes in ('12' "12", '01' "01",'02' "02",'03' "03",'04' "04",'05' "05",'06' "06",'07' "07",'08' "08",'09' "09",'10' "10",'11' "11")
+) where periodo = $P{PERIODO}]]>
+	</queryString>
+	<field name="CEDULA" class="java.lang.String"/>
+	<field name="EMPLEADO" class="java.lang.String"/>
+	<field name="REGION" class="java.lang.String"/>
+	<field name="AGENCIA" class="java.lang.String"/>
+	<field name="CARGO" class="java.lang.String"/>
+	<field name="F_INGRESO" class="java.sql.Timestamp"/>
+	<field name="PERIODO" class="java.lang.String"/>
+	<field name="12_VALOR" class="java.math.BigDecimal"/>
+	<field name="12_FP" class="java.lang.String"/>
+	<field name="01_VALOR" class="java.math.BigDecimal"/>
+	<field name="01_FP" class="java.lang.String"/>
+	<field name="02_VALOR" class="java.math.BigDecimal"/>
+	<field name="02_FP" class="java.lang.String"/>
+	<field name="03_VALOR" class="java.math.BigDecimal"/>
+	<field name="03_FP" class="java.lang.String"/>
+	<field name="04_VALOR" class="java.math.BigDecimal"/>
+	<field name="04_FP" class="java.lang.String"/>
+	<field name="05_VALOR" class="java.math.BigDecimal"/>
+	<field name="05_FP" class="java.lang.String"/>
+	<field name="06_VALOR" class="java.math.BigDecimal"/>
+	<field name="06_FP" class="java.lang.String"/>
+	<field name="07_VALOR" class="java.math.BigDecimal"/>
+	<field name="07_FP" class="java.lang.String"/>
+	<field name="08_VALOR" class="java.math.BigDecimal"/>
+	<field name="08_FP" class="java.lang.String"/>
+	<field name="09_VALOR" class="java.math.BigDecimal"/>
+	<field name="09_FP" class="java.lang.String"/>
+	<field name="10_VALOR" class="java.math.BigDecimal"/>
+	<field name="10_FP" class="java.lang.String"/>
+	<field name="11_VALOR" class="java.math.BigDecimal"/>
+	<field name="11_FP" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="50" width="70" height="20" uuid="2822c1df-f709-4378-b8c2-a21078fceda6">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm">
+				<reportElement x="70" y="50" width="170" height="20" uuid="e0001cdc-2e53-48b3-9bda-7e95ecb31366">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="0" y="0" width="1132" height="50" uuid="2d250375-9721-4d6e-a99f-a60418de85a6"/>
+				<image scaleImage="FillFrame" isLazy="true">
+					<reportElement x="0" y="0" width="240" height="50" uuid="36f2fbdb-7bd8-4e12-8854-3b2f35b46d2d"/>
+					<imageExpression><![CDATA[$P{IMAGE_DIR} + "/logounno.jpg"]]></imageExpression>
+				</image>
+				<textField>
+					<reportElement x="240" y="0" width="842" height="30" uuid="ed1835c9-fd18-47c1-bd02-8fa4fd6d40f1">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="15" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["DECIMO TERCER SUELDO PERIODO: " +$F{PERIODO}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="70" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="ea87de6e-a621-45ed-aecb-74ff07b72a9b">
+					<property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CEDULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="70" y="0" width="170" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="e97dad86-752a-4352-b788-9407dc664316"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[EMPLEADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="240" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="67c42f6c-7e9a-4cfc-9698-6d883ca08f55">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[AGENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="360" y="0" width="117" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="d521f6fd-c869-4562-9953-0c74bb9c2ec1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CARGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="477" y="0" width="55" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="46c54165-ab6c-4f83-8d60-50e26354a359">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="net.sf.jasperreports.export.xls.auto.filter" value="End"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[INGRESO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="532" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="da9f920f-5846-4859-a812-f4d46352881f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[DICIEMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="582" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="7438952e-2f72-4ece-8c74-b47f99eb3faa">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[12_FP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="632" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="9bd94ee1-d8f2-4096-9b74-b323cb55e53d">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[ENERO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="682" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="63a6b964-73cd-4b76-bcfe-72704675ee6c">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[01_FP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="732" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="4a22347f-d12f-4114-9e98-31fb7c3414ca">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FEBRERO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="782" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="cc5dcd60-674d-4d72-8690-c887e4b276da">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[02_FP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="832" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="16c4d156-80c7-4649-8eb3-e16832619989">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[MARZO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="882" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="fc0457ac-49c3-471b-8a64-a08e03e8cdb4">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[03_FP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="932" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="755152ae-4ebc-47ab-84f8-cd06d25e171a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[ABRIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="982" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="a159c780-a2b2-4127-b3b9-ed74fef9659f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[04_FP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1032" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="7e6c710a-8822-490e-ab8e-2be30ee40de3">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[MAYO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1082" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="02f7caa8-1034-4cce-8f94-4cc414fd9001">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[05_FP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1132" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="8835f2bf-0d19-4de9-bad2-80d4211eff8c">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[JUNIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1182" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="1be985ba-b9ad-4f2b-9dff-772a2373ff9f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[06_FP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1232" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="b134cdf1-4e56-402a-a6c9-4e58422e542a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[JULIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1282" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="709d43fe-2d56-4943-8e7d-fcf84e9a7de1">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[07_FP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1332" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="1ca4af13-84c4-425c-91aa-c9f0f99ad88e">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[AGOSTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1382" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="f58314d7-b76b-4cd1-bbe1-14c1005b70e3">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[08_FP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1432" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="ade7a19b-5988-4ab9-b4f9-8616c3844ec1">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[SEPTIEMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1482" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="712d86e7-27f9-4af4-a77d-c5dcc95b121c">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[09_FP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1532" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="fdefb916-eea2-44c5-bc32-720cc2dab56e">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[OCTUBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1582" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="7eef22c1-8d59-4b4a-86f2-4090fd694c2a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[10_FP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1632" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="f5349ddd-0340-4bb7-b08e-490bed9bb544">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[NOVIEMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1682" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="6e4db12e-bade-4913-aaea-d303bf2d5c20">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[11_FP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1732" y="0" width="50" height="20" forecolor="#FFFFFF" backcolor="#2A4977" uuid="5b155c77-5851-45cd-b5fc-74aaa8863faf">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.spreadsheet.SpreadsheetLayout"/>
+			<textField>
+				<reportElement x="0" y="0" width="70" height="16" uuid="c048adcf-459c-42ff-a5af-ae5eca8e6647">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CEDULA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="170" height="16" uuid="327c7a93-69a0-465f-8b2a-06a1b7459733"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPLEADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="120" height="16" uuid="29a45acc-4d34-473d-bf71-d9645ecd7153"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AGENCIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="0" width="117" height="16" uuid="b3e73b4e-1da0-4449-b1d5-887184d3dcf6"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="0" width="55" height="16" uuid="eef0497d-fecf-49fd-83c7-a41e61437818">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="net.sf.jasperreports.export.xls.freeze.column.edge" value="Right"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").format($F{F_INGRESO})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="532" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="3ad9dc22-c694-4082-bc3e-1e3a3e7ee45f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{12_VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="582" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="3f74baac-f527-4822-9d3d-7cc0a6b4c11a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{12_FP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="632" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="22139a46-abbf-4407-abd3-7ad7594a4b1d">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{01_VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="682" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="76b7a1d2-38d2-47fb-b706-dc758a7f6b01">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{01_FP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="732" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="0d2c1bd9-7b21-4bb2-a390-4271b9998210">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{02_VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="782" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="91eff3ec-dba6-4065-8dae-3843e174657b">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{02_FP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="832" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="0a005fcc-4a43-4beb-8599-5421525d5fd4">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{03_VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="882" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="07abfe72-f191-4f84-bfa2-04534a225103">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{03_FP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="932" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="c34fa8a9-b549-4f6f-b0b8-29cf58442bd5">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{04_VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="982" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="df59fa79-cb52-4d76-9601-d1a22be78513">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{04_FP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1032" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="dcfc7136-854f-4946-9cd8-b6278f480b14">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{05_VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1082" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="99792e79-c482-4ddb-851d-5529a1171a4a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{05_FP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1132" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="d1783571-06fd-41de-8780-b141a37f4cae">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{06_VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1182" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="6ebb0006-44ac-4b1e-9d6d-5ee79d74df3b">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{06_FP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1232" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="fc21bfa6-56f3-42f7-8632-a8b9290b3652">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{07_VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1282" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="03370969-4881-4626-a60f-bccba449bc3f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{07_FP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1332" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="a1f28830-58cb-4975-a93c-a0419e558b74">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{08_VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1382" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="ac238485-5c26-4cc2-b8d7-a02f358b5e93">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{08_FP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1432" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="992f0c00-b984-44e2-8ea3-c04fd70dce56">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{09_VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1482" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="3d2521fe-3689-4138-80e4-fbd35b890854">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{09_FP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1532" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="42fd54cf-0d0f-430e-8477-76cd6cd54132">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{10_VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1582" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="71d6ba82-cb11-498b-b2af-22284d35c826">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{10_FP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1632" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="75f8db77-b990-4dac-aa3b-d55ad07f53f5">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{11_VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(#,##0.###-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1682" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="194ef46a-606c-4cde-bfb6-6b6e202e3218">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{11_FP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00-)" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="1732" y="0" width="50" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="972e4cad-205c-4982-b4c3-283328b4d8ae"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{12_VALOR}.doubleValue()+$F{01_VALOR}.doubleValue()+$F{02_VALOR}.doubleValue()+$F{03_VALOR}.doubleValue()+$F{04_VALOR}.doubleValue()+$F{05_VALOR}.doubleValue()+$F{06_VALOR}.doubleValue()+$F{07_VALOR}.doubleValue()+$F{08_VALOR}.doubleValue()+$F{09_VALOR}.doubleValue()+$F{10_VALOR}.doubleValue()+$F{11_VALOR}.doubleValue()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="54">
+			<staticText>
+				<reportElement x="258" y="10" width="452" height="30" uuid="05d40029-6992-40ad-9761-724fb9cbf993"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[NO EXISTEN DATOS]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

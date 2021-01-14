@@ -1,0 +1,58 @@
+{% extends 'list.html' %}
+{% load static %}
+{% load embed %}
+
+{% block head_list_js %}
+    <!-- Librerias propias -->
+    <script src="{% static 'empleado/js/listEmpleados.js' %}"></script>
+{% endblock %}
+
+{% block head_list_css %}
+{% endblock %}
+
+{% block content %}
+    {% block cabecera_list %}
+    {% endblock %}
+
+    {% block body_list %}
+        {% embed 'datatable.html' with idtable='tablaEmpleados' %}
+            {% block columns %}
+                <tr>
+                    <th scope="col" style="width: 5%;">Cedula</th>
+                    <th scope="col" style="width: 15%;">Empleado</th>
+                    <th scope="col" style="width: 15%;">Departamento</th>
+                    <th scope="col" style="width: 15%;">Agencia</th>
+                    <th scope="col" style="width: 15%;">Cargo</th>
+                    <th scope="col" style="width: 10%;">Ingreso</th>
+                    <th scope="col" style="width: 10%;">DiasLab</th>
+                    <th scope="col" style="width: 10%;">PagoLiq</th>
+                    <th scope="col" style="width: 5%;">Liquidar</th>
+                </tr>
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        function generarReporte(element) {
+            //obtiene la fila y datos del registro seleccionado
+            var tr = tablaEmp.cell($(element).closest('td, li')).index();
+            var data = tablaEmp.row(tr.row).data();
+
+            data_ = "action=genReporte&cedula=" + data.cod_personal;
+            genArchivo(window.location.pathname, data_, "liqEmpleado.xlsx");
+        };
+
+
+        function generarliq(element) {
+            //obtiene la fila y datos del registro seleccionado
+            var tr = tablaEmp.cell($(element).closest('td, li')).index();
+            var data = tablaEmp.row(tr.row).data();
+
+            data_ = "action=genLiq&cedula=" + data.cod_personal;
+            var url = '{% url 'personal:liqEmpleado' %}';
+            submit_with_ajax(url, 'Notificación', '¿Seguro de Generar Liquidacion de Empleado?', data_);
+        };
+    </script>
+{% endblock %}

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RP_ROLPAGOS" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2a9a28b-d3ef-4798-ad49-4288fde2dc44">
+	<property name="ireport.zoom" value="1.5000000000000027"/>
+	<property name="ireport.x" value="54"/>
+	<property name="ireport.y" value="612"/>
+	<parameter name="IMAGE_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\juansolano\\OneDrive - Grupo Vazquez\\Mastermoto\\ReportesJasper\\imagenes"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\juansolano\\OneDrive - Grupo Vazquez\\Mastermoto\\ReportesJasper"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PEMPRESA" class="java.lang.String"/>
+	<parameter name="PCOD_PERSONA" class="java.lang.String"/>
+	<parameter name="PFECHA" class="java.lang.String"/>
+	<parameter name="PUSUARIO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select a.nombre, a.ruc, a.direccion, a.telefono1, a.telefono2,to_char(b.fecha, 'yyyy') anio,
+       b.tipo_comprobante, b.cod_comprobante,
+       ('ROL DE PAGOS DEL MES DE ' || to_char(b.fecha,'MONTH','nls_date_language=spanish')) TITULO,
+       b.cod_persona, b.nombre_persona,
+       (select nombre from tg_agencia where empresa = c.empresa and cod_agencia = c.cod_agencia) agencia,
+       d.descripcion cargo,
+       to_char(b.fecha, 'yyyy-mm-dd') fecha,
+       b.DIASTRABAJADOS,
+       sum(decode(e.DEBITO_CREDITO, 1, e.valor, 2, (e.valor*-1))) valor_pago
+from computo.empresa a, jaher.rh_comprobante b, jaher.rh_personal c, jaher.rh_cargos d, jaher.rh_movimiento e, jaher.rh_beneficios f
+where a.empresa = b.empresa
+and b.tipo_comprobante = 'RH'--:PL_TIPO
+--and b.cod_comprobante = 'RP.000010'--:PL_COMPROBANTE
+and to_char(b.FECHA, 'yyyy-mm') = $P{PFECHA}
+and b.cod_persona = $P{PCOD_PERSONA}--:PL_PERSONA
+and b.empresa = c.empresa
+and b.cod_tipo_persona = c.cod_tipo_persona
+and b.cod_persona = c.cod_personal
+and c.empresa = d.codigo_empresa
+and c.codigo_cargo = d.codigo_cargo
+and b.empresa = e.empresa
+and b.TIPO_COMPROBANTE = e.TIPO_COMPROBANTE
+and b.COD_COMPROBANTE = e.COD_COMPROBANTE
+and b.COD_PERSONA = e.COD_PERSONA
+and b.IDSEC = e.IDSEC
+and e.valor > 0
+and e.DEBITO_CREDITO in (1,2)
+and e.EMPRESA = f.EMPRESA
+and e.COD_BENEFICIO = f.COD_BENEFICIO
+and f.AA = to_char(b.FECHA, 'yyyy')
+and a.empresa = $P{PEMPRESA}
+group by a.nombre, a.ruc, a.direccion, a.telefono1, a.telefono2, b.fecha, b.tipo_comprobante, b.cod_comprobante, b.cod_persona, b.nombre_persona, c.empresa, c.cod_agencia, d.descripcion, b.DIASTRABAJADOS]]>
+	</queryString>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="RUC" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="TELEFONO1" class="java.math.BigDecimal"/>
+	<field name="TELEFONO2" class="java.math.BigDecimal"/>
+	<field name="ANIO" class="java.lang.String"/>
+	<field name="TIPO_COMPROBANTE" class="java.lang.String"/>
+	<field name="COD_COMPROBANTE" class="java.lang.String"/>
+	<field name="TITULO" class="java.lang.String"/>
+	<field name="COD_PERSONA" class="java.lang.String"/>
+	<field name="NOMBRE_PERSONA" class="java.lang.String"/>
+	<field name="AGENCIA" class="java.lang.String"/>
+	<field name="CARGO" class="java.lang.String"/>
+	<field name="FECHA" class="java.lang.String"/>
+	<field name="DIASTRABAJADOS" class="java.math.BigDecimal"/>
+	<field name="VALOR_PAGO" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="138" splitType="Stretch">
+			<textField>
+				<reportElement x="30" y="49" width="131" height="25" uuid="440ad886-cbc9-4d05-ac69-0da0ccaa7da3"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIRECCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="89" width="399" height="18" uuid="bad69f32-3781-4cde-90d9-dac98813c102"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TITULO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="36" width="41" height="13" uuid="8ef7abde-831e-4adf-ab46-3268903d3db2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{TELEFONO1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="36" width="44" height="13" uuid="20727321-ff0a-4b58-b5e8-7ff0c6359c6d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{TELEFONO2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="49" width="85" height="13" uuid="eecb8ba7-e520-4fbb-a0ae-19367a80a8cf"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{RUC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="219" y="107" width="115" height="17" uuid="34d44fda-4216-44ae-9f5a-d193370f515d"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="36" width="67" height="13" uuid="86dbc9db-ac4c-49dd-ac92-fa50bcdfa5b4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELÉFONO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="49" width="67" height="13" uuid="28dd1f65-f50d-472b-bf5c-7087bd705f13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC:]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="30" y="0" width="131" height="49" uuid="87de10ad-8d40-433f-84b9-f5e7010fdf6b"/>
+				<imageExpression><![CDATA[$P{IMAGE_DIR} + "/logounno.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="142" y="0" width="44" height="15" uuid="bdd936f0-3c3f-43c7-8a0b-962e574f0958"/>
+				<textFieldExpression><![CDATA[$F{DIASTRABAJADOS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="0" width="112" height="15" uuid="cb133fbc-05b0-40cc-b440-9f3dbad331a8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIAS TRABAJADOS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="86" y="29" width="100" height="14" uuid="38c27fdd-214d-4acf-9300-da551b20ecfe"/>
+				<textFieldExpression><![CDATA[$F{COD_PERSONA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="43" width="186" height="14" uuid="2859c044-d347-4d13-bb84-033e913b62a1"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE_PERSONA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="57" width="185" height="14" uuid="395453ac-6b92-442e-844e-c5dac63aea81"/>
+				<textFieldExpression><![CDATA[$F{AGENCIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="71" width="185" height="14" uuid="dd7f052b-c38f-4cc4-a235-b31b3e715527"/>
+				<textFieldExpression><![CDATA[$F{CARGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="15" width="100" height="14" uuid="4df525ae-14ff-4fd1-96f5-77379d7d70f0"/>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="29" width="56" height="14" uuid="88fae4d5-a041-4e08-9c94-778289a2ef1d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CEDULA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="43" width="56" height="14" uuid="6de99efb-fc5e-44e4-9230-07493667065a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="57" width="56" height="14" uuid="7e82125e-6c76-463f-b1ea-81f37315c829"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AGENCIA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="71" width="56" height="14" uuid="dfaa0dbb-9e04-4f55-9f77-cacc1d44e799"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARGO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="15" width="56" height="14" uuid="b2dc02a7-22ba-483c-b471-781ea69b0ee3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="334" y="7" width="172" height="64" uuid="3b4d001a-d54c-48e2-a195-8f88774bc9fe"/>
+				<subreportParameter name="PCOD_PERSONA">
+					<subreportParameterExpression><![CDATA[$F{COD_PERSONA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PCOD_COMPROBANTE">
+					<subreportParameterExpression><![CDATA[$F{COD_COMPROBANTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PTIPO_COMPROBANTE">
+					<subreportParameterExpression><![CDATA[$F{TIPO_COMPROBANTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PEMPRESA">
+					<subreportParameterExpression><![CDATA[$P{PEMPRESA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/RP_ROLPAGOS3.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement x="30" y="113" width="477" height="1" uuid="da4a8691-24ad-45d3-ae52-455ad08b8548"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="283" y="7" width="1" height="78" uuid="0468769d-5539-4c53-ac6b-2f5b2520c10e"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="67" splitType="Stretch">
+			<subreport>
+				<reportElement x="10" y="0" width="226" height="64" uuid="a0f7ad0f-edd9-4230-8f49-2ac4d0c3ca6c"/>
+				<subreportParameter name="PCOD_PERSONA">
+					<subreportParameterExpression><![CDATA[$F{COD_PERSONA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PCOD_COMPROBANTE">
+					<subreportParameterExpression><![CDATA[$F{COD_COMPROBANTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PTIPO_COMPROBANTE">
+					<subreportParameterExpression><![CDATA[$F{TIPO_COMPROBANTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PEMPRESA">
+					<subreportParameterExpression><![CDATA[$P{PEMPRESA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/RP_ROLPAGOS1.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="272" y="0" width="249" height="64" uuid="7332445a-b798-4b6c-9786-31a9a0561664"/>
+				<subreportParameter name="PCOD_PERSONA">
+					<subreportParameterExpression><![CDATA[$F{COD_PERSONA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PCOD_COMPROBANTE">
+					<subreportParameterExpression><![CDATA[$F{COD_COMPROBANTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PTIPO_COMPROBANTE">
+					<subreportParameterExpression><![CDATA[$F{TIPO_COMPROBANTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PEMPRESA">
+					<subreportParameterExpression><![CDATA[$P{PEMPRESA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/RP_ROLPAGOS2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="97">
+			<textField>
+				<reportElement x="140" y="30" width="85" height="13" uuid="752ef500-3917-4e90-9fa8-499db38c524e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{PUSUARIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="30" width="111" height="13" uuid="eaaf966d-6884-4a88-aeca-cff859e382ae"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[USUARIO:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="140" y="17" width="85" height="13" uuid="2257a1c8-72c5-4d44-9bcd-679dd1e17be2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="17" width="111" height="13" uuid="c64a89ac-fb73-45ee-adfd-06e4caebb36e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA IMPRESIÓN:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="30" y="11" width="195" height="1" uuid="5507d6df-0ce1-4bc6-b80d-6073cc93ef44"/>
+			</line>
+			<textField>
+				<reportElement x="492" y="11" width="29" height="20" uuid="a3f37ed9-182a-49c0-a7d6-efe182991ee6"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="459" y="11" width="33" height="13" uuid="1960e0d4-927e-4590-867b-0ce3218aea4a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAG.]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="225" splitType="Stretch">
+			<textField pattern="$ #,##0.00">
+				<reportElement x="436" y="17" width="85" height="20" uuid="e669b327-d05d-43fa-b357-db53e8f13083"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VALOR_PAGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="48" y="120" width="141" height="15" uuid="592bfbd3-79dc-403c-b4d9-987b0550bd71"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="48" y="135" width="141" height="15" uuid="392824df-f471-4b61-aa43-f588b8ae31e7"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RUC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="302" y="17" width="134" height="20" uuid="f356f648-0fcf-4f32-9b26-22adcb0618bf"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL A PAGAR:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="75" y="177" width="100" height="1" uuid="276dcec4-d451-42ca-b26f-4449bf578e92"/>
+			</line>
+			<staticText>
+				<reportElement x="68" y="178" width="114" height="20" uuid="13776b98-308f-4406-aad6-3a73ad76751e"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TALENTO HUMANO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="178" width="100" height="20" uuid="1a02b291-a94e-47e4-926d-2da4dfd54edb"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECIBI COFORME]]></text>
+			</staticText>
+			<line>
+				<reportElement x="342" y="178" width="100" height="1" uuid="17b40c82-58b5-4343-902a-95cabc181bae"/>
+			</line>
+			<textField>
+				<reportElement x="284" y="120" width="208" height="15" uuid="b2aead75-d4e4-47a2-a4b0-5e81832b217b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_PERSONA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="135" width="208" height="15" uuid="b7606b99-421c-4183-ab8c-b2fad0d2996b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_PERSONA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

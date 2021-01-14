@@ -1,0 +1,99 @@
+{% extends 'reporte.html' %}
+
+{% block form_header %}
+{% endblock %}
+
+{% block form_body %}
+    <div class="card-body">
+        <div class="form-group">
+            <label> USUARIO: </label>
+            {{ form.cod_persona }}
+        </div>
+        <input type="hidden" name="empleado" value=""/>
+        <div class="form-group">
+            <label> PERIODO: </label>
+            {{ form.periodo }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block form_footer %}
+    <div class="card-footer">
+        <div style="color: #FFFFFF; text-align: center">
+            <a class="btn btn-primary btn-lg" onclick="generarReporte(this)" id="btn_gen">
+                <span id="item_cargando" role="status" aria-hidden="true"></span>
+                <span id="item_texto">Generar Reporte</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript_reporte %}
+    <script>
+        $('.select2').select2({
+            theme: "bootstrap4",
+            language: 'es'
+        });
+
+        var select_periodo = $('select[name="periodo"]');
+        var select_empleado = $('select[name="cod_persona"]')
+
+        select_empleado.on('change', function () {
+            var id = $(this).val();
+            if (id === '') return false;
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: {
+                    'action': 'search_periodo_id',
+                    'id': id
+                },
+                dataType: 'json',
+            }).done(function (data) {
+                if (!data.hasOwnProperty('error')) {
+                    select_periodo.html('').select2({
+                        theme: "bootstrap4",
+                        language: 'es',
+                        data: data
+                    });
+                    $('input[name="empleado"]').val(id);
+                    return false;
+                }
+                message_error(data.error);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            }).always(function (data) {
+            });
+        });
+        select_periodo.on('change', function () {
+            var value = select_periodo.select2('data')[0];
+            var id = $(this).val();
+            console.log(id);
+        });
+
+        select_empleado.trigger('change');
+
+        function generarReporte(element) {
+            if (!select_periodo.val()) {
+                message_error('Revisar los datos');
+                return false;
+            }
+
+            msjConfirmacion(title = 'Seguro de Generar Rol?',
+                text = "Recuerde que al descargar, deja constancia de haber recibido el documento, si tiene alguna novedad acercarse a RRHH!",
+                text_ok = 'Si, Descargar!',
+                callback = descargarRep);
+        };
+
+        function descargarRep() {
+            Swal.fire( 'Generando ... !',
+                        'Al terminar el proceso su archivo se descargara en su maquina',
+                        'success');
+
+            $('input[name="action"]').val('genReporte')
+            data_ = $('#F50-001').serialize();
+            genArchivo(window.location.pathname, data_, "{{ nombre_reporte }}");
+        };
+
+    </script>
+{% endblock %}
