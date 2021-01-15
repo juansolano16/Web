@@ -2,10 +2,17 @@
 from crispy_forms.bootstrap import TabHolder, Tab
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Column, Submit, Field, HTML
-from django.forms import Form, ModelChoiceField, ModelForm
+from django.forms import Form, ModelChoiceField, ModelForm, ChoiceField
 from django.forms.widgets import Select
 
 from core.personal.models.personal.models import VtPersonal, RhPersonal
+
+choiseActivo = [("S", "ACTIVO"),
+                ("N", "INACTIVO"),
+                (['S', 'N'], "TODOS"),]
+
+class formPersonalActivo(Form):
+    activo = ChoiceField(choices=choiseActivo, label='Personal Activo:')
 
 
 class formRhPersonal(ModelForm):

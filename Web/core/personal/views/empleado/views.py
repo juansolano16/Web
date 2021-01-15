@@ -10,7 +10,7 @@ from core.clases_general import reportes
 from core.clases_general.mixins import GroupRequiredMixin
 
 import config.settings as setting
-from core.personal.forms.empleado.forms import formRhPersonal
+from core.personal.forms.empleado.forms import formRhPersonal, formPersonalActivo
 from core.personal.models.personal.models import VtPersonal, RhPersonal
 
 class listEmpleados(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
@@ -25,15 +25,8 @@ class listEmpleados(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
         try:
             action = request.POST['action']
             if action == 'searchdata':
-                data = [i.toJSON() for i in VtPersonal.objects.all().filter(activo = 'S')]
-            elif action == 'genReporte':
-                file_path = self.gen_reporte(request.POST['cedula'])
-                return FileResponse(open(file_path, 'rb'))
-            elif action == 'genLiq':
-                ## EJECUTA PROCEDIMIENTOS ALMACENADOS ###
-                with connections['default'].cursor() as cur:
-                    cur.callproc('JAHER.PK_RH_ROLES.LIQ_HABERES', [2, request.POST['cedula']])
-                data = {'ok': 'Se ha generado valores de liquidacion'}
+                activo = request.POST['activos']
+                data = [i.toJSON() for i in VtPersonal.objects.all().filter(activo__in=activo)]
             else:
                 data = {'error': 'Ha ocurrido un error'}
         except Exception as e:
@@ -56,6 +49,7 @@ class listEmpleados(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Empleados'
+        context['formActivo'] = formPersonalActivo()
         return context
 
 
@@ -64,6 +58,16 @@ class rhPersonalCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
     model = RhPersonal
     form_class = formRhPersonal
     group_required = [u'Rh_admin', ]
+    success_url = reverse_lazy('personal:listEmpleados')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Crear Empleado'
+        context['entity'] = 'Listado Empleado'
+        context['list_url'] = self.success_url
+        context['formActivo'] = formPersonalActivo()
+        return context
+
 
 
 class rhPersonalUpdateView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):

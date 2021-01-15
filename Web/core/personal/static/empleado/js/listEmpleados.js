@@ -1,3 +1,4 @@
+var vactivo = 'S';
 var tablaEmp;
 
 var vcolumns = [
@@ -27,15 +28,24 @@ var vcolumnDefs = [
 ];
 
 $(function () {
+    $('#id_activo').parent().attr('class','pure-css-select-style theme-rounded');
+
+    $('select[name=activo]').on('change', function () {
+        vactivo = $(this).val();
+        CargarListEmpleados();
+    });
+
     CargarListEmpleados();
 });
 
 function CargarListEmpleados() {
     var url = window.location.pathname;
-    var data = {'action': 'searchdata',}
+    var data = {'action': 'searchdata', 'activos': vactivo}
     sendDataAjax(url, data, function (json) {
-        llenarTabla(id = 'tablaEmpleados', list = json, columns = vcolumns, columnDefs = vcolumnDefs, pagelen = 10)
+        tablaEmp = llenarTabla(id = 'tablaEmpleados', list = json, columns = vcolumns, columnDefs = vcolumnDefs, pagelen = 10)
     });
 };
+
+
 
 

@@ -1,5 +1,6 @@
 {% extends 'list.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% load embed %}
 
 {% block head_list_js %}
@@ -11,47 +12,37 @@
 {% endblock %}
 
 {% block content %}
-    {% block cabecera_list %}
-    {% endblock %}
-
-    {% block body_list %}
-        {% embed 'datatable.html' with idtable='tablaEmpleados' %}
-            {% block columns %}
-                <tr>
-                    <th scope="col" style="width: 5%;">Cedula</th>
-                    <th scope="col" style="width: 15%;">Empleado</th>
-                    <th scope="col" style="width: 15%;">Agencia</th>
-                    <th scope="col" style="width: 15%;">Departamento</th>
-                    <th scope="col" style="width: 15%;">Cargo</th>
-                    <th scope="col" style="width: 5%;">Ingreso</th>
-                    <th scope="col" style="width: 5%;">DiasLab</th>
-                    <th scope="col" style="width: 5%;">Detalle</th>
-                </tr>
-            {% endblock %}
-        {% endembed %}
-    {% endblock %}
+    <div class="card">
+        <div class="card-header" style="padding: 10px">
+            <div class="row">
+                <div class="form-group col-6">
+                        {{ formActivo.activo | as_crispy_field }}
+                </div>
+                <div class="form-group col-6" style="display: flex; align-items: center; justify-content:center">
+                    <a href="{% url 'personal:rhPersonalCreate' %}" type="butttom" class="btn btn-success btn-flat">
+                        <i class="fas fa-plus"></i> Crear Usuario
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            {% embed 'datatable.html' with idtable='tablaEmpleados' %}
+                {% block columns %}
+                    <tr>
+                        <th scope="col" style="width: 5%;">Cedula</th>
+                        <th scope="col" style="width: 20%;">Empleado</th>
+                        <th scope="col" style="width: 15%;">Agencia</th>
+                        <th scope="col" style="width: 15%;">Departamento</th>
+                        <th scope="col" style="width: 15%;">Cargo</th>
+                        <th scope="col" style="width: 5%;">Ingreso</th>
+                        <th scope="col" style="width: 5%;">DiasLab</th>
+                        <th scope="col" style="width: 5%;">Detalle</th>
+                    </tr>
+                {% endblock %}
+            {% endembed %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascript %}
-    <script>
-        function generarReporte(element) {
-            //obtiene la fila y datos del registro seleccionado
-            var tr = tablaEmp.cell($(element).closest('td, li')).index();
-            var data = tablaEmp.row(tr.row).data();
-
-            data_ = "action=genReporte&cedula=" + data.cod_personal;
-            genArchivo(window.location.pathname, data_, "liqEmpleado.xlsx");
-        };
-
-
-        function generarliq(element) {
-            //obtiene la fila y datos del registro seleccionado
-            var tr = tablaEmp.cell($(element).closest('td, li')).index();
-            var data = tablaEmp.row(tr.row).data();
-
-            data_ = "action=genLiq&cedula=" + data.cod_personal;
-            var url = '{% url 'personal:liqEmpleado' %}';
-            submit_with_ajax(url, 'Notificación', '¿Seguro de Generar Liquidacion de Empleado?', data_);
-        };
-    </script>
 {% endblock %}
