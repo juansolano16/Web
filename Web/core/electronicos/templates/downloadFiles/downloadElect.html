@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="row" style="display: flex; align-items: center;">
+        <div class="col-sm-6" style="margin: auto auto; ">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h4>INGRESE EL ARCHIVO PLANTILLA: </h4>
+                </div>
+                <div class="card-body">
+                    <form action="{% url "electronicos:dowloadElec" %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="file"
+                               title="Upload excel file"
+                               name="excel_file"
+                               style="border: 1px solid black; padding: 5px;"
+                               required="required">
+                        <hr>
+                        <p><input type="submit"
+                                  value="Upload"
+                                  style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

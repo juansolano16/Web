@@ -13,13 +13,13 @@ from core.facturacion.modelos.comprobante.models import VtVentaMotor1
 
 class VentasUnno():
 
-    def genReporte(self, ruc_proveedor, correo_prov):
+    def genReporte(self, ruc_proveedor, correo_prov, pfecha):
         data = {}
         try:
             path = settings.BASE_DIR + '/core/facturacion/reportes/jasper/'
             base = 'UNNOPARTSDB'
-            parametros = {'FDESDE': datetime.now().strftime('%d/%m/%Y'),
-                          'FHASTA': datetime.now().strftime('%d/%m/%Y'),
+            parametros = {'FDESDE': pfecha.strftime('%d/%m/%Y'),
+                          'FHASTA': pfecha.strftime('%d/%m/%Y'),
                           'RUC': ruc_proveedor}
             rep = reportes.ReporteJasper(path, base)
             file_path = rep.generarReporte('ReporteVentas', parametros, extencion='xlsx')
@@ -34,21 +34,21 @@ class VentasUnno():
                                              correo_prov)  # Destinatario
             message.attach_alternative(content, 'text/html')
             message.attach_file(file_path)
-            message.attach_file(self.genArchivoPlano(ruc_proveedor))
+            message.attach_file(self.genArchivoPlano(ruc_proveedor, pfecha))
             message.send()
             data['ok'] = 'ok'
         except Exception as e:
             data['error'] = str(e)
         return (data)
 
-    def genArchivoPlano(self, ruc):
-        path = settings.BASE_DIR + "/core/TmpReportes/Ventas" + datetime.now().strftime('%d_%m_%Y') + '.txt'
+    def genArchivoPlano(self, ruc, pfecha):
+        path = settings.BASE_DIR + "/core/TmpReportes/Ventas" + pfecha.strftime('%d_%m_%Y') + '.txt'
         file = open(path, "w")
         caracter = chr(9)
         # MOTOR 1 #######################
         if ruc == '1792014166001':
             cabecera = 1
-            for reg in VtVentaMotor1.objects.filter(fecha_venta=datetime.now()):
+            for reg in VtVentaMotor1.objects.filter(fecha_venta=pfecha):
                 file.write(reg.cod_prov + chr(9) +
                        reg.numero_serie + chr(9) +
                        reg.chasis + chr(9) +

@@ -1,4 +1,4 @@
-var vactivo = 'S';
+var vactivo = "S";
 var tablaEmp;
 
 var vcolumns = [
@@ -30,10 +30,10 @@ var vcolumnDefs = [
 $(function () {
     $('#id_activo').parent().attr('class','pure-css-select-style theme-rounded');
 
-    $('select[name=activo]').on('change', function () {
+    vactivo = $('select[name=activo]').on('change', function () {
         vactivo = $(this).val();
         CargarListEmpleados();
-    });
+    }).val();
 
     CargarListEmpleados();
 });

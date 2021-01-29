@@ -11,7 +11,8 @@ from core.clases_general.mixins import GroupRequiredMixin
 
 import config.settings as setting
 from core.personal.forms.empleado.forms import formRhPersonal, formPersonalActivo
-from core.personal.models.personal.models import VtPersonal, RhPersonal
+from core.personal.models.personal.models import VtPersonal, RhPersonal, RhPersonalD, RhPersonalInstruccion
+
 
 class listEmpleados(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
     template_name = 'empleado/listEmpleados.html'
@@ -69,7 +70,6 @@ class rhPersonalCreateView(LoginRequiredMixin, GroupRequiredMixin, CreateView):
         return context
 
 
-
 class rhPersonalUpdateView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     model = RhPersonal
     form_class = formRhPersonal
@@ -77,9 +77,26 @@ class rhPersonalUpdateView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     group_required = [u'Rh_admin', ]
     success_url = reverse_lazy('personal:listEmpleados')
 
+    @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
-        self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        try:
+            action = request.POST['action']
+            if action == 'searchCargos':
+                per = request.POST['cod_personal']
+                data = [i.toJSON() for i in RhPersonalD.objects.filter(cod_personal=per)]
+
+            elif action == 'searchEstudios':
+                per = request.POST['cod_personal']
+                data = [i.toJSON() for i in RhPersonalInstruccion.objects.filter(cod_personal=per)]
+
+            else:
+                data = {'error': 'Ha ocurrido un error ' + action}
+        except Exception as e:
+            data = {'error': str(e)}
+        return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

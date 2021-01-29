@@ -5,6 +5,10 @@ from PIL import Image
 import random
 import string
 
+choiseActivo = [("S", "ACTIVO"),
+                ("N", "INACTIVO"),
+                (['S', 'N'], "TODOS"),]
+
 def get_random_string(length):
     letters = string.ascii_lowercase
     result_str = ''.join(random.choice(letters) for i in range(length))

@@ -163,3 +163,48 @@ class VtVentaMotor1(models.Model):
     class Meta:
         managed = False  # Created from a view. Don't remove.
         db_table = 'vt_venta_motor1'
+
+
+
+################### COMPROBANTES ELECTRONICOS ###########################
+class StComprobanteElectronico(models.Model):
+    empresa = models.IntegerField()
+    tipo_comprobante = models.CharField(max_length=50)
+    cod_comprobante = models.CharField(max_length=50, primary_key=True)
+    nro_autorizacion = models.CharField(max_length=49, blank=True, null=True)
+    nro_serie = models.CharField(max_length=10, blank=True, null=True)
+    fecha_validez = models.DateField(blank=True, null=True)
+    direccion = models.CharField(max_length=200, blank=True, null=True)
+    autoimpresion = models.CharField(max_length=1, blank=True, null=True)
+    tipo_comprobante_alt = models.CharField(max_length=2, blank=True, null=True)
+    cod_comprobante_alt = models.CharField(max_length=9, blank=True, null=True)
+    secuencia = models.IntegerField(blank=True, null=True)
+    identificacion = models.CharField(max_length=14, blank=True, null=True)
+    comprobante_sri = models.CharField(max_length=20, blank=True, null=True)
+    archivo_xml = models.CharField(max_length=4000, blank=True, null=True)
+    razon_social = models.CharField(max_length=200, blank=True, null=True)
+    iva = models.DecimalField(max_digits=14, decimal_places=2, blank=True, null=True)
+    direccion_matriz = models.CharField(max_length=200, blank=True, null=True)
+    ruc = models.CharField(max_length=20, blank=True, null=True)
+    resolucion = models.CharField(max_length=250, blank=True, null=True)
+    archivo_xml_anulado = models.CharField(max_length=4000, blank=True, null=True)
+    cod_tipo_contribuyente = models.IntegerField(blank=True, null=True)
+    fecha_tipo_cont = models.DateField(blank=True, null=True)
+    direccion_cliente = models.CharField(max_length=300, blank=True, null=True)
+    leyenda_tipo_cont = models.CharField(max_length=50, blank=True, null=True)
+    xml_electronico = models.TextField(blank=True, null=True)
+    xml_pruebas = models.TextField(blank=True, null=True)
+    clave_acceso = models.CharField(max_length=64, blank=True, null=True)
+    clave_pruebas = models.CharField(max_length=64, blank=True, null=True)
+
+    def __str__(self):
+        return self.cod_comprobante
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
+    class Meta:
+        managed = False
+        db_table = 'ST_COMPROBANTE_ELECTRONICO'
+        unique_together = (('cod_comprobante', 'tipo_comprobante', 'empresa'), ('tipo_comprobante', 'cod_comprobante'),)

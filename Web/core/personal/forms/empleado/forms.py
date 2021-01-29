@@ -2,17 +2,16 @@
 from crispy_forms.bootstrap import TabHolder, Tab
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Column, Submit, Field, HTML
+from crispy_forms.utils import TEMPLATE_PACK
 from django.forms import Form, ModelChoiceField, ModelForm, ChoiceField
 from django.forms.widgets import Select
 
+from core.clases_general.Utilities import choiseActivo
 from core.personal.models.personal.models import VtPersonal, RhPersonal
 
-choiseActivo = [("S", "ACTIVO"),
-                ("N", "INACTIVO"),
-                (['S', 'N'], "TODOS"),]
 
 class formPersonalActivo(Form):
-    activo = ChoiceField(choices=choiseActivo, label='Personal Activo:')
+    activo = ChoiceField(choices=choiseActivo, label='Personal Activo:', initial=choiseActivo[2])
 
 
 class formRhPersonal(ModelForm):
@@ -72,10 +71,33 @@ class formRhPersonal(ModelForm):
                     ),
                 ),
                 Tab('Estudios Realizados',
-                    # Field('field_name_3', css_class="extra")
+                     HTML('''  {% load embed %}
+                               {% embed 'datatable.html' with idtable='tblEstudios' %}
+                                    {% block columns %}
+                                        <tr>
+                                            <th scope="col" style="width: 20%;">Nivel Instruccion:</th>
+                                            <th scope="col" style="width: 20%;">Institucion:</th>
+                                            <th scope="col" style="width: 20%;">Observacion</th>
+                                        </tr>
+                                    {% endblock %}
+                               {% endembed %}''')
                 ),
                 Tab('Historial Cargos',
-                    # Field('field_name_3', css_class="extra")
+                     HTML( ''' {% load embed %}
+                               {% embed 'datatable.html' with idtable='tblCargos' %}
+                                    {% block columns %}
+                                        <tr>
+                                            <th scope="col" style="width: 15%;">Ingreso por:</th>
+                                            <th scope="col" style="width: 20%;">Descripción Cargo</th>
+                                            <th scope="col" style="width: 5%;">F.Desde</th>
+                                            <th scope="col" style="width: 5%;">F.Hasta</th>
+                                            <th scope="col" style="width: 20%;">Agencia</th>
+                                            <th scope="col" style="width: 5%;">F.Ingreso</th>
+                                            <th scope="col" style="width: 5%;">F.Egreso</th>
+                                            <th scope="col" style="width: 20%;">Motivo Salida</th>
+                                        </tr>
+                                    {% endblock %}
+                               {% endembed %}''')
                 ),
                 Tab('Parametros Empresa',
                     Row(
