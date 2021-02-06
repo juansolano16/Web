@@ -209,8 +209,8 @@ AUTH_USER_MODEL = 'user.User'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "infosistema@mastermoto.com.ec"
-EMAIL_HOST_PASSWORD = "Inf0Sys$$"
+EMAIL_HOST_USER = "notificaciones@unnoparts.com.ec"
+EMAIL_HOST_PASSWORD = "Usuario2020"
 EMAIL_USE_TLS = True
 
 Q_CLUSTER = {

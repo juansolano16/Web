@@ -9,10 +9,10 @@
 {% block columns %}
     <tr>
         <th scope="col" style="width: 25%;">Cliente</th>
-        <th scope="col" style="width: 10%;">Tipo Doc</th>
-        <th scope="col" style="width: 12%;">F.Emision</th>
+        <th scope="col" style="width: 15%;">Tipo Doc</th>
+        <th scope="col" style="width: 10%;">F.Emision</th>
         <th scope="col" style="width: 15%;">F.Autorizacion</th>
-        <th scope="col" style="width: 20%;">No. Doc</th>
+        <th scope="col" style="width: 17%;">No. Doc</th>
         <th scope="col" style="width: 10%;">Estado</th>
         <th scope="col" style="width: 10%;">Links</th>
     </tr>
@@ -58,8 +58,7 @@
             var tr = tabla2.cell($(element).closest('td, li')).index();
             var data = tabla2.row(tr.row).data();
 
-            console.log(data);
-            if (element.id == 'xml') data_ = "action=descargaRide&comprobante=" + data['dirxml'];
+            if (element.id === 'xml') data_ = "action=descargaRide&comprobante=" + data['dirxml'];
             else data_ = "action=descargaRide&comprobante=" + data['dirpdf'];
             genArchivo(window.location.pathname, data_, data['nodocumento'] + "." + element.id);
         };
@@ -84,6 +83,20 @@
             submit_with_ajax(window.location.path, title, contenido, data_, function () {
                 $('#modalFormAdd').modal('hide');
             }, contentType);
+        };
+
+        function generaRide(element){
+            //obtiene la fila y datos del registro seleccionado
+            var tr = tabla2.cell($(element).closest('td, li')).index();
+            var data = tabla2.row(tr.row).data();
+
+            if (data.tipodoc !== 'FACTURA') {
+                message_error('OPCIÓN VÁLIDA SÓLO PARA FACTURAS');
+                return false;
+            };
+
+            data_ = "action=generaRide&comprobante=" + data['dirxml'];
+            genArchivo(window.location.pathname, data_, data['nodocumento'] + ".pdf");
         };
     </script>
 {% endblock %}

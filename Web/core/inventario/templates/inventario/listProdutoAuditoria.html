@@ -70,20 +70,18 @@
 
     {% block body_list %}
         <ul class="nav nav-tabs">
-            <li class="nav-item"><a role="tab" data-toggle="tab" class="nav-link active"
-                                    href="#tab-1">Motos/Bicicletas</a>
-            </li>
-            <li class="nav-item"><a role="tab" data-toggle="tab" class="nav-link"
-                                    href="#tab-2">Repuestos/Promocionales</a>
-            </li>
-            <li class="nav-item"><a role="tab" data-toggle="tab" class="nav-link"
-                                    href="#tab-3">Auvi/Electrodomésticos</a></li>
+            {% for key in tabs %}
+                <li class="nav-item">
+                    <a role="tab" data-toggle="tab" class="nav-link {% if key.id == 'tab-1' %} active {% endif %}"
+                       href="#{{ key.id }}">{{ key.nom }}</a>
+                </li>
+            {% endfor %}
         </ul>
 
         <br>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="tab-1">
-                {% embed 'datatable.html' with idtable='data1' %}
+                {% embed 'datatable.html' with idtable='tabMoto' %}
                     {% block columns %}
                         <tr>
                             <th scope="col" style="width: 5%;">Tipo</th>
@@ -100,7 +98,27 @@
                     {% endblock %}
                 {% endembed %}
             </div>
+
             <div role="tabpanel" class="tab-pane" id="tab-2">
+                {% embed 'datatable.html' with idtable='tabBici' %}
+                    {% block columns %}
+                        <tr>
+                            <th scope="col" style="width: 5%;">Tipo</th>
+                            <th scope="col" style="width: 10%;">Codigo</th>
+                            <th scope="col" style="width: 20%;">Producto</th>
+                            <th scope="col" style="width: 5%;">Dev</th>
+                            <th scope="col" style="width: 10%;">Serie</th>
+                            <th scope="col" style="width: 10%;">Chasis</th>
+                            <th scope="col" style="width: 5%;">Año</th>
+                            <th scope="col" style="width: 5%;">Color</th>
+                            <th scope="col" style="width: 5%;">Dias</th>
+                            <th scope="col" style="width: 5%;">Registrar</th>
+                        </tr>
+                    {% endblock %}
+                {% endembed %}
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="tab-3">
                 Total Inventario: <span id="total_inv"></span> <br>
                 Total Registrado: <span id="total_reg"></span>
                 {% embed 'datatable.html' with idtable='tablaRep' %}
@@ -118,20 +136,41 @@
                         </tr>
                     {% endblock %}
 
-{#                    {% block foot %}#}
-{#                        <tr>#}
-{#                            <th>sName</th>#}
-{#                            <th>Position</th>#}
-{#                            <th>Office</th>#}
-{#                            <th>Age</th>#}
-{#                            <th>Start date</th>#}
-{#                            <th>Salary</th>#}
-{#                        </tr>#}
-{#                    {% endblock %}#}
+                    {#                    {% block foot %}#}
+                    {#                        <tr>#}
+                    {#                            <th>sName</th>#}
+                    {#                            <th>Position</th>#}
+                    {#                            <th>Office</th>#}
+                    {#                            <th>Age</th>#}
+                    {#                            <th>Start date</th>#}
+                    {#                            <th>Salary</th>#}
+                    {#                        </tr>#}
+                    {#                    {% endblock %}#}
 
                 {% endembed %}
             </div>
-            <div role="tabpanel" class="tab-pane" id="tab-3">
+
+            <div role="tabpanel" class="tab-pane" id="tab-4">
+                Total Inventario: <span id="total_inv"></span> <br>
+                Total Registrado: <span id="total_reg"></span>
+                {% embed 'datatable.html' with idtable='tablaPro' %}
+                    {% block columns %}
+                        <tr>
+                            <th scope="col" style="width: 5%;">Tipo</th>
+                            <th scope="col" style="width: 5%;">Marca</th>
+                            <th scope="col" style="width: 5%;">Código</th>
+                            <th scope="col" style="width: 20%;">Producto</th>
+                            <th scope="col" style="width: 5%;">Dev</th>
+                            <th scope="col" style="width: 5%;">Grupo</th>
+                            <th scope="col" style="width: 5%;">Cantidad</th>
+                            <th scope="col" style="width: 5%;">Registrado</th>
+                            <th scope="col" style="width: 5%;">Registrar</th>
+                        </tr>
+                    {% endblock %}
+                {% endembed %}
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="tab-5">
                 {% embed 'datatable.html' with idtable='tablaAuvi' %}
                     {% block columns %}
                         <tr>
@@ -225,8 +264,8 @@
         // Inicializar Variables
         $(function () {
             $('.nav-tabs a').on('shown.bs.tab', function (event) {
-                if (select_agencia.val()) CargarInv();
                 select_tab = $('.nav-tabs .active').text();
+                if (select_agencia.val()) CargarInv();
             });
         });
 
@@ -235,18 +274,20 @@
             var agencia = select_agencia.val();
             if (ag != 123123) agencia = ag;
 
-            if (!select_agencia.val() && ag == 123123) {
+            if (!select_agencia.val() && ag === 123123) {
                 message_error('Revisar los datos, Agencia no seleccionada');
                 return false;
-            }
-            ;
+            };
 
             var url = window.location.pathname;
-            var tab_select = $('.nav-tabs .active').text();
-            var action = tab_select == "Motos/Bicicletas" ? "searchInvantarioFinal" : tab_select == "Repuestos/Promocionales" ? "searchInvantarioRep" : "searchInvantarioAuvi";
-            var recibeF = tab_select == "Motos/Bicicletas" ? recibeJsonInv : tab_select == "Repuestos/Promocionales" ? recibeJsonInvRep : recibeJsonInvAuvi;
-            var data = {'action': action, 'agencia': agencia}
-            sendDataAjax(url, data, recibeF);
+            var action = "";
+            if (select_tab === tabs[0].nom || select_tab === tabs[1].nom) action = "searchInvantarioFinal";
+            else if (select_tab === tabs[2].nom || select_tab === tabs[3].nom) action = "searchInvantarioRep";
+            else if (select_tab === tabs[4].nom) action = "searchInvantarioAuvi";
+
+            var tab = tabs.find(element => element.nom === select_tab);
+            var data = {'action': action, 'agencia': agencia, 'idtable': tab.id_tabla};
+            sendDataAjax(url, data, recibeJsonInv);
         };
 
         function showModalSobrante() {
@@ -264,14 +305,12 @@
             if (!select_agencia.val() && comprobante == '---') {
                 message_error('Revisar los datos, Agencia no seleccionada');
                 return false;
-            }
-            ;
+            };
 
             if (estado_cab == 'S' && comprobante != '---') {
                 message_error('No puede realizar la siguiente accion, cabecera cerrada');
                 return false;
-            }
-            ;
+            };
 
             var url = window.location.pathname;
             var title = 'Cerrar edición de inventario';

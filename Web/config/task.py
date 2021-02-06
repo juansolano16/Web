@@ -70,8 +70,8 @@ from config.wsgi import *
 #     print(password)
 
 
-from core.user.clases.usuario_oracle import CrearUserOracle
-print(CrearUserOracle())
+# from core.user.clases.usuario_oracle import CrearUserOracle
+# print(CrearUserOracle())
 
 # from core.inventario.schedules.bodegaV import genRep
 # print(genRep(1))
@@ -91,11 +91,11 @@ from django.http import FileResponse
 #     cur.callproc('stock.gen_IMG', [p])
 
 #######################################################################
-# from core.electronicos.clases.DocElectronicos import rideFac
-#
-# file = r'C:\Users\juansolano\OneDrive - Grupo Vazquez\Mastermoto\Python Web Services\SerWebDjango\Web\core\FACTURA_007-500-000002087.xml'
-# # file = r'C:\Users\juansolano\OneDrive - Grupo Vazquez\Mastermoto\Python Web Services\SerWebDjango\Web\core\030-001A02K1001432.xml'
-# # file = r'C:\Users\juansolano\OneDrive - Grupo Vazquez\Mastermoto\Python Web Services\SerWebDjango\Web\core\FACT-012-001A01Q1002511.xml'
-# ride = rideFac()
-# print(ride.genPDF(file))
+from core.electronicos.clases.DocElectronicos import rideFac
+
+file = r'C:\Users\juansolano\OneDrive - Grupo Vazquez\Mastermoto\Python Web Services\SerWebDjango\Web\core\TmpReportes\FACT-032-001A01Y1000637.xml'
+# file = r'C:\Users\juansolano\OneDrive - Grupo Vazquez\Mastermoto\Python Web Services\SerWebDjango\Web\core\030-001A02K1001432.xml'
+# file = r'C:\Users\juansolano\OneDrive - Grupo Vazquez\Mastermoto\Python Web Services\SerWebDjango\Web\core\FACT-012-001A01Q1002511.xml'
+ride = rideFac()
+print(ride.genPDF(file))
 

@@ -2,7 +2,7 @@ from django.urls import  path
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
-from core.electronicos.views import listRide, dowloadElec, downloadElect
+from core.electronicos.views import listRide, downloadElect
 
 app_name = 'electronicos'
 

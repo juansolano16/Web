@@ -1,6 +1,46 @@
 var tabla1;
 var select_agencia;
 var select_categoria;
+var tbl_select;
+
+//// VARIABLES PARA LA TABLA DE MOTOS
+var vcolumnsMoto = [
+    {"data": "tipo"},
+    {"data": "codigo"},
+    {"data": "producto"},
+    {"data": "tiene_devolucion"},
+    {"data": "motor"},
+    {"data": "chasis"},
+    {"data": "anio"},
+    {"data": "color"},
+    {"data": "dias"},
+    {"data": "invgrabado"},
+];
+
+var vcolumnDefsMoto = [
+    {
+        targets: [3, 6, 7, 8],
+        class: 'text-center',
+    },
+    {
+        targets: [-1],
+        class: 'text-center',
+        orderable: false,
+        render: function (data, type, row) {
+            if (data == 0) {
+                color = "btn btn-warning btn-xs btn-flat";
+                icono = "fas fa-chec";
+            } else {
+                color = "btn btn-success btn-xs btn-flat";
+                icono = "fas fa-check";
+            };
+
+            var buttons = '<a class="' + color + '" onclick="ingresarInvModal(this)" style="border-radius: 20%; padding: 0%"><i class="' + icono + '" style="width:40px; height:15px; color: white;" ></i></a> ';
+            // buttons += '<a href="#" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
+            return buttons;
+        }
+    },
+];
 
 // Inicializar Variables
 $(function () {
@@ -49,7 +89,6 @@ $(function () {
     // Inicializar Variables
     select_agencia = $('#cod_agencia');
     select_categoria = $('#cat_producto');
-    select_tab = $('.nav-tabs .active').text();
 
     $('#cod_agencia').on('change', function () {
         CargarInv();
@@ -77,9 +116,12 @@ function recibeJsonInv(json) {
     $('input[name="estado_cab"]').val(json['cerrado']);
     if (json['cerrado'] == 'S' || json['cerrado'] == '-') disableBtn('btn_cerrar_cab', true);
     else disableBtn('btn_cerrar_cab', false);
-    llenarTabla(json['data'])
+    //llenarTabla(json['data'])
+    var tabla = tabs.find(element => element.nom === select_tab);
+    tbl_select = llenarTabla(id = tabla.id_tabla, list = json['data'], columns = vcolumnsMoto, columnDefs = vcolumnDefsMoto)
 };
 
+/*
 function llenarTabla(list) {
     tabla1 = $('#data1').DataTable({
         responsive: true,
@@ -142,7 +184,7 @@ function llenarTabla(list) {
     $('#data1').on('order.dt', function () {
         tabla1.rows().nodes().to$().css("font-size", "90%");
     });
-};
+};*/
 
 function ingresarInvModal(element) {
     $('input[name="action"]').val('grabarEstadoInv');
@@ -173,12 +215,13 @@ function ingresarInvModal(element) {
 
 function ingresarInvModalSobrante(ag = 123123) {
     console.log('Sobrante Moto');
-    $( 'input[name="serie"]' ).autocomplete( "option", "appendTo", "#modalform1");
+    $('input[name="serie"]').autocomplete("option", "appendTo", "#modalform1");
 
     if (!select_agencia.val() && ag == 123123) {
         message_error('Revisar los datos, Agencia no seleccionada');
         return false;
-    };
+    }
+    ;
 
     $('input[name="action"]').val('grabarEstadoInv');
     $('input[name="factura"]').val('-').attr('readonly', true);

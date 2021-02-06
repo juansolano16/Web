@@ -5,6 +5,8 @@ from PIL import Image
 import random
 import string
 
+from config import settings
+
 choiseActivo = [("S", "ACTIVO"),
                 ("N", "INACTIVO"),
                 (['S', 'N'], "TODOS"),]
@@ -57,5 +59,15 @@ def resize_image(path):
         img = img.resize((basewidth, hsize), Image.ANTIALIAS)
         img.save(path)
 
+
+def cleanDirTmp(dir=None):
+    try:
+        if dir is None: dir = settings.BASE_DIR + '/core/TmpReportes'
+        files = readDir(dir=dir, file=0)
+        for fichero in files:
+            os.remove(os.path.join(dir, fichero))
+        return 'ok'
+    except Exception as e:
+        return str(e)
 
 

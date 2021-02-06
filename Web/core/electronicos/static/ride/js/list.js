@@ -82,18 +82,23 @@ $(function () {
         ],
         columnDefs: [
             {
+                targets: [-2,-4,-5],
+                class: 'text-center',
+            },
+            {
                 targets: [-1],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a href="#" class="btn btn-success btn-xs" onclick="descargaRide(this)" id="xml"><i class="far fa-file-excel"></i></a> ';
-                    buttons += '<a href="#" type="button" class="btn btn-success btn-xs btn-flat" onclick="descargaRide(this)" id="pdf"><i class="far fa-file-pdf"></i></a>';
+                    var buttons = '<a href="#" class="btn btn-danger btn-xs" onclick="generaRide(this)" style="border-radius: 20%; width: 25px"><i class="far fa-file-pdf"></i></a> ';
+                    buttons += '<a href="#" class="btn btn-warning btn-xs" onclick="descargaRide(this)" id="xml" style="border-radius: 20%; width: 25px"><i class="far fa-file-excel"></i></a> ';
+                    buttons += '<a href="#" type="button" class="btn btn-success btn-xs btn-flat" onclick="descargaRide(this)" id="pdf" style="border-radius: 20%; width: 25px"><i class="far fa-file-pdf"></i></a>';
                     return buttons;
                 }
             },
         ],
-        initComplete: function (settings, json) {
-
-        }
+        initComplete: function (settings, json) {}
     });
+
+
 });
