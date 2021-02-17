@@ -2,6 +2,8 @@ var tabla1;
 var select_agencia;
 var select_categoria;
 var tbl_select;
+var order_tabla;
+var filtroSearch;
 
 //// VARIABLES PARA LA TABLA DE MOTOS
 var vcolumnsMoto = [
@@ -33,7 +35,8 @@ var vcolumnDefsMoto = [
             } else {
                 color = "btn btn-success btn-xs btn-flat";
                 icono = "fas fa-check";
-            };
+            }
+            ;
 
             var buttons = '<a class="' + color + '" onclick="ingresarInvModal(this)" style="border-radius: 20%; padding: 0%"><i class="' + icono + '" style="width:40px; height:15px; color: white;" ></i></a> ';
             // buttons += '<a href="#" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
@@ -48,6 +51,8 @@ $(function () {
         theme: "bootstrap4",
         language: 'es'
     });
+
+    $('[data-widget="pushmenu"]').PushMenu('collapse');
 
     $('input[name="serie"]').autocomplete({
         source: function (request, response) {
@@ -94,9 +99,29 @@ $(function () {
         CargarInv();
     });
 
-    $('[data-widget="pushmenu"]').PushMenu('collapse');
     CargarInv(1);
 });
+
+function CargarInv(ag = 123123) {
+    var agencia = select_agencia.val();
+    if (ag != 123123) agencia = ag;
+
+    if (!select_agencia.val() && ag === 123123) {
+        message_error('Revisar los datos, Agencia no seleccionada');
+        return false;
+    }
+    ;
+
+    var url = window.location.pathname;
+    var action = "";
+    if (select_tab === tabs[0].nom || select_tab === tabs[1].nom) action = "searchInvantarioFinal";
+    else if (select_tab === tabs[2].nom || select_tab === tabs[3].nom) action = "searchInvantarioRep";
+    else if (select_tab === tabs[4].nom) action = "searchInvantarioAuvi";
+
+    var tab = tabs.find(element => element.nom === select_tab);
+    var data = {'action': action, 'agencia': agencia, 'idtable': tab.id_tabla};
+    sendDataAjax(url, data, recibeJsonInv);
+};
 
 function submitModalGrabaInv() {
     $('#modalformd1').on('submit', function (e) {
@@ -119,6 +144,62 @@ function recibeJsonInv(json) {
     //llenarTabla(json['data'])
     var tabla = tabs.find(element => element.nom === select_tab);
     tbl_select = llenarTabla(id = tabla.id_tabla, list = json['data'], columns = vcolumnsMoto, columnDefs = vcolumnDefsMoto)
+};
+
+function ingresarInvModal(element) {
+    $('input[name="action"]').val('grabarEstadoInv');
+    modal_title.find('span').html('Resultado Inventario');
+    modal_title.find('i').removeClass().addClass('fas fa-tasks');
+
+    //obtiene la fila y datos del registro seleccionado
+    var tr = tabla1.cell($(element).closest('td, li')).index();
+    var data = tabla1.row(tr.row).data();
+
+    $('input[name="factura"]').val(data.factura).attr('readonly', true);
+    $('input[name="cod_producto"]').val(data.codigo).attr('readonly', true);
+    $('input[name="serie"]').val(data.motor).attr('readonly', true);
+    $('input[name="chasis"]').val(data.chasis).attr('readonly', true);
+    $('input[name="categoriaInv"]').val('Moto');
+    $('input[name="observacion1"]').val('');
+    $('input[name="observacion2"]').val('');
+
+    $('input[name="ingreso_manual"]').val('N');
+    $('input[name="sobrante"]').val('N');
+
+    if (data.invgrabado > 0) {
+        msjConfirmacion(title = 'Confirmacion', text = 'Desea actualizar registro?', text_ok = 'SI', function () {
+            $('#modalform1').modal('show');
+        });
+    } else $('#modalform1').modal('show');
+};
+
+function ingresarInvModalSobrante(ag = 123123) {
+    console.log('Sobrante Moto');
+    $('input[name="serie"]').autocomplete("option", "appendTo", "#modalform1");
+
+    if (!select_agencia.val() && ag == 123123) {
+        message_error('Revisar los datos, Agencia no seleccionada');
+        return false;
+    }
+    ;
+
+    $('input[name="action"]').val('grabarEstadoInv');
+    $('input[name="factura"]').val('-').attr('readonly', true);
+    $('input[name="cod_producto"]').val('').attr('readonly', true);
+    $('input[name="serie"]').attr('readonly', false);
+    $('input[name="ingreso_manual"]').val('S');
+    $('input[name="observacion1"]').val('');
+    $('input[name="observacion2"]').val('');
+    $('input[name="sobrante"]').val('S');
+    $('input[name="categoriaInv"]').val('Moto');
+    $('#modalform1').modal('show');
+};
+
+function showModalSobrante() {
+    var tab_select = $('.nav-tabs .active').text();
+    if (tab_select == "Motos/Bicicletas") ingresarInvModalSobrante();
+    else if (tab_select == "Repuestos/Promocionales") ingresarInvModalSobranteRep();
+    else if (tab_select == "Auvi/Electrodomésticos") ingresarInvModalSobranteAuvi();
 };
 
 /*
@@ -186,54 +267,7 @@ function llenarTabla(list) {
     });
 };*/
 
-function ingresarInvModal(element) {
-    $('input[name="action"]').val('grabarEstadoInv');
-    modal_title.find('span').html('Resultado Inventario');
-    modal_title.find('i').removeClass().addClass('fas fa-tasks');
 
-    //obtiene la fila y datos del registro seleccionado
-    var tr = tabla1.cell($(element).closest('td, li')).index();
-    var data = tabla1.row(tr.row).data();
-
-    $('input[name="factura"]').val(data.factura).attr('readonly', true);
-    $('input[name="cod_producto"]').val(data.codigo).attr('readonly', true);
-    $('input[name="serie"]').val(data.motor).attr('readonly', true);
-    $('input[name="chasis"]').val(data.chasis).attr('readonly', true);
-    $('input[name="categoriaInv"]').val('Moto');
-    $('input[name="observacion1"]').val('');
-    $('input[name="observacion2"]').val('');
-
-    $('input[name="ingreso_manual"]').val('N');
-    $('input[name="sobrante"]').val('N');
-
-    if (data.invgrabado > 0) {
-        msjConfirmacion(title = 'Confirmacion', text = 'Desea actualizar registro?', text_ok = 'SI', function () {
-            $('#modalform1').modal('show');
-        });
-    } else $('#modalform1').modal('show');
-};
-
-function ingresarInvModalSobrante(ag = 123123) {
-    console.log('Sobrante Moto');
-    $('input[name="serie"]').autocomplete("option", "appendTo", "#modalform1");
-
-    if (!select_agencia.val() && ag == 123123) {
-        message_error('Revisar los datos, Agencia no seleccionada');
-        return false;
-    }
-    ;
-
-    $('input[name="action"]').val('grabarEstadoInv');
-    $('input[name="factura"]').val('-').attr('readonly', true);
-    $('input[name="cod_producto"]').val('').attr('readonly', true);
-    $('input[name="serie"]').attr('readonly', false);
-    $('input[name="ingreso_manual"]').val('S');
-    $('input[name="observacion1"]').val('');
-    $('input[name="observacion2"]').val('');
-    $('input[name="sobrante"]').val('S');
-    $('input[name="categoriaInv"]').val('Moto');
-    $('#modalform1').modal('show');
-};
 
 
 

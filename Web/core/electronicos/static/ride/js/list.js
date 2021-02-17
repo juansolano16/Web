@@ -62,6 +62,9 @@ $(function () {
         processing: true,
         serverSide: true,
         pageLength: 5,
+        scrollX: true,
+        scrollCollapse: true,
+        fixedColumns: true,
         lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
         ajax: {
             url: window.location.pathname,
@@ -77,7 +80,6 @@ $(function () {
             {"data": "fechaemision"},
             {"data": "fechaautorizacion"},
             {"data": "nodocumento"},
-            {"data": "estado"},
             {"data": "estado"},
         ],
         columnDefs: [
@@ -97,7 +99,9 @@ $(function () {
                 }
             },
         ],
-        initComplete: function (settings, json) {}
+        initComplete: function (settings, json) {
+            $(this).css("font-size", "90%");
+        }
     });
 
 

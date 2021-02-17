@@ -1,4 +1,5 @@
 var vactivo = "S";
+var vempresa = 2;
 var tablaEmp;
 
 var vcolumns = [
@@ -28,10 +29,14 @@ var vcolumnDefs = [
 ];
 
 $(function () {
-    $('#id_activo').parent().attr('class','pure-css-select-style theme-rounded');
+    $('#id_activo').parent().attr('class','pure-css-select-style theme-rounded').css('height', '33px');
+    $('#id_empresa').parent().attr('class','pure-css-select-style theme-rounded').css('height', '33px');
 
     vactivo = $('select[name=activo]').on('change', function () {
-        vactivo = $(this).val();
+        CargarListEmpleados();
+    }).val();
+
+    vempresa = $('select[name=empresa]').on('change', function () {
         CargarListEmpleados();
     }).val();
 
@@ -40,7 +45,7 @@ $(function () {
 
 function CargarListEmpleados() {
     var url = window.location.pathname;
-    var data = {'action': 'searchdata', 'activos': vactivo}
+    var data = {'action': 'searchdata', 'activos': vactivo, 'empresa': vempresa}
     sendDataAjax(url, data, function (json) {
         tablaEmp = llenarTabla(id = 'tablaEmpleados', list = json, columns = vcolumns, columnDefs = vcolumnDefs, pagelen = 10)
     });

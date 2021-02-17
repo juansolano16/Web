@@ -27,7 +27,8 @@ class listEmpleados(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
             action = request.POST['action']
             if action == 'searchdata':
                 activo = request.POST['activos']
-                data = [i.toJSON() for i in VtPersonal.objects.all().filter(activo__in=activo)]
+                empresa = request.POST['empresa']
+                data = [i.toJSON() for i in VtPersonal.objects.all().filter(activo__in=activo, empresa = empresa)]
             else:
                 data = {'error': 'Ha ocurrido un error'}
         except Exception as e:

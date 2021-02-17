@@ -4,44 +4,57 @@
 {% load embed %}
 
 {% block head_list_js %}
-    <!-- Librerias propias -->
-    <script src="{% static 'empleado/js/listEmpleados.js' %}"></script>
+<!-- Librerias propias -->
+<script src="{% static 'empleado/js/listEmpleados.js' %}"></script>
 {% endblock %}
 
 {% block head_list_css %}
 {% endblock %}
 
 {% block content %}
-    <div class="card">
-        <div class="card-header" style="padding: 10px">
-            <div class="row">
-                <div class="form-group col-6">
-                        {{ formActivo.activo | as_crispy_field }}
+<div class="card">
+    <div class="card-header" style="padding: 10px">
+        <div class="row">
+            <div class="row col-6" style="padding: 0px 50px">
+                <div id="div_empresa" class="form-group" style="padding-right: 50px">
+                    <label class=" requiredField">
+                        Empresa:
+                    </label>
+                    <div class="">
+                        <select name="empresa" class="select form-control" id="id_empresa">
+                            <option value="2" selected="">UNNOPARTS S. A.</option>
+                            <option value="4">UNNOMOTORS</option>
+                            <option value="5">UNNOCYCLES</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group col-6" style="display: flex; align-items: center; justify-content:center">
-                    <a href="{% url 'personal:rhPersonalCreate' %}" type="butttom" class="btn btn-success btn-flat">
-                        <i class="fas fa-plus"></i> Crear Usuario
-                    </a>
-                </div>
+
+                {{ formActivo.activo | as_crispy_field }}
+            </div>
+            <div class="form-group col-6" style="display: flex; align-items: center; justify-content:center">
+                <a href="{% url 'personal:rhPersonalCreate' %}" type="butttom" class="btn btn-success btn-flat">
+                    <i class="fas fa-plus"></i> Crear Usuario
+                </a>
             </div>
         </div>
-        <div class="card-body">
-            {% embed 'datatable.html' with idtable='tablaEmpleados' %}
-                {% block columns %}
-                    <tr>
-                        <th scope="col" style="width: 5%;">Cedula</th>
-                        <th scope="col" style="width: 20%;">Empleado</th>
-                        <th scope="col" style="width: 15%;">Agencia</th>
-                        <th scope="col" style="width: 15%;">Departamento</th>
-                        <th scope="col" style="width: 15%;">Cargo</th>
-                        <th scope="col" style="width: 5%;">Ingreso</th>
-                        <th scope="col" style="width: 5%;">DiasLab</th>
-                        <th scope="col" style="width: 5%;">Detalle</th>
-                    </tr>
-                {% endblock %}
-            {% endembed %}
-        </div>
     </div>
+    <div class="card-body">
+        {% embed 'datatable.html' with idtable='tablaEmpleados' %}
+        {% block columns %}
+        <tr>
+            <th scope="col" style="width: 5%;">Cedula</th>
+            <th scope="col" style="width: 20%;">Empleado</th>
+            <th scope="col" style="width: 15%;">Agencia</th>
+            <th scope="col" style="width: 15%;">Departamento</th>
+            <th scope="col" style="width: 15%;">Cargo</th>
+            <th scope="col" style="width: 5%;">Ingreso</th>
+            <th scope="col" style="width: 5%;">DiasLab</th>
+            <th scope="col" style="width: 5%;">Detalle</th>
+        </tr>
+        {% endblock %}
+        {% endembed %}
+    </div>
+</div>
 {% endblock %}
 
 {% block javascript %}

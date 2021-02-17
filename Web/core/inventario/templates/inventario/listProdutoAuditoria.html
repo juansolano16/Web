@@ -135,18 +135,6 @@
                             <th scope="col" style="width: 5%;">Registrar</th>
                         </tr>
                     {% endblock %}
-
-                    {#                    {% block foot %}#}
-                    {#                        <tr>#}
-                    {#                            <th>sName</th>#}
-                    {#                            <th>Position</th>#}
-                    {#                            <th>Office</th>#}
-                    {#                            <th>Age</th>#}
-                    {#                            <th>Start date</th>#}
-                    {#                            <th>Salary</th>#}
-                    {#                        </tr>#}
-                    {#                    {% endblock %}#}
-
                 {% endembed %}
             </div>
 
@@ -258,8 +246,6 @@
     <script>
         var tabs = {{ tabs|safe }};
         var select_tab = tabs[0].nom;
-        var order_tabla;
-        var filtroSearch;
 
         // Inicializar Variables
         $(function () {
@@ -268,34 +254,6 @@
                 if (select_agencia.val()) CargarInv();
             });
         });
-
-
-        function CargarInv(ag = 123123) {
-            var agencia = select_agencia.val();
-            if (ag != 123123) agencia = ag;
-
-            if (!select_agencia.val() && ag === 123123) {
-                message_error('Revisar los datos, Agencia no seleccionada');
-                return false;
-            };
-
-            var url = window.location.pathname;
-            var action = "";
-            if (select_tab === tabs[0].nom || select_tab === tabs[1].nom) action = "searchInvantarioFinal";
-            else if (select_tab === tabs[2].nom || select_tab === tabs[3].nom) action = "searchInvantarioRep";
-            else if (select_tab === tabs[4].nom) action = "searchInvantarioAuvi";
-
-            var tab = tabs.find(element => element.nom === select_tab);
-            var data = {'action': action, 'agencia': agencia, 'idtable': tab.id_tabla};
-            sendDataAjax(url, data, recibeJsonInv);
-        };
-
-        function showModalSobrante() {
-            var tab_select = $('.nav-tabs .active').text();
-            if (tab_select == "Motos/Bicicletas") ingresarInvModalSobrante();
-            else if (tab_select == "Repuestos/Promocionales") ingresarInvModalSobranteRep();
-            else if (tab_select == "Auvi/Electrodomésticos") ingresarInvModalSobranteAuvi();
-        };
 
         function cerrarComprobante() {
             var agencia = select_agencia.val();
